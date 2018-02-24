@@ -10,6 +10,7 @@ use App\Model\Venue\VenueModel;
 class SearchApi extends Controller
 {
     public function getSearchData(Request $request){
+    	return $request->all();
     	$regency = strtolower($request->lokasi);
     	$venueType = strtolower($request->tipe);
     	$dataVenue = [];

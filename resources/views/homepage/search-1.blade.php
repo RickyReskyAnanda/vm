@@ -102,7 +102,7 @@
                 <h6 class="card-title">Filter Lokasi</h6>
                 @foreach($kecamatan as  $kec)
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" name="cbLokasi[]" class="custom-control-input" id="kec{{strtolower($kec->name)}}">
+                  <input type="checkbox" name="cbLokasi" class="custom-control-input" value="{{$kec->name}}" id="kec{{strtolower($kec->name)}}">
                   <label class="custom-control-label" for="kec{{strtolower($kec->name)}}">{{ucfirst(strtolower($kec->name))}}</label>
                 </div>
                 @endforeach
@@ -306,29 +306,28 @@
         var dataLokasi = "{{$request->lokasi}}";
         var dataTipe = "{{$request->tipe}}";
         var dataVenue= [];
+        var selectedKecamatan = [];
         
         var getDataVenue = function(){
           $.ajax({
-            url: "{{url('api/v1/search')}}?lokasi="+dataLokasi+"&tipe="+dataTipe, 
+            url: "{{url('api/v1/search')}}", 
+            method:'post',
+            data: {
+                    'kecamatan':JSON.stringify(selectedKecamatan),
+                    'lokasi':dataLokasi,
+                    'tipe':dataTipe,
+                  },
+            dataType:'json',
             success: function(result){
               dataVenue = result;
-              setDataVenue();
+              // setDataVenue();
             }
           });
         }
 
         getDataVenue();
 
-        $(document).on('click','.card-btn-call',function(){
-          itemData = dataVenue.response;
-          var itemIndex = $(this).attr('data-id');
-          
-          $('#modalCallHeader').text(itemData[itemIndex].name);
-          $('#modalCallBody').html('<h5 class="fw-7">Nomor Telpon :</h5>'+
-                                '<h6 class="fw-7 text-danger">'+itemData[itemIndex].official_number+'</h6>'+
-                                '<h6 class="fw-7 text-danger">'+itemData[itemIndex].contact_number+'</h6>');
-          $('#modalCall').modal('show');
-        });
+        
         var setDataVenue = function(){
           $('#listDataVenue').html(' ');    
           $.each(dataVenue.response, function (index, itemData) {
@@ -365,9 +364,28 @@
           });
         }//batas setDataVenue
 
-        
-
+      //filter kecamatan
+      $('input[name=cbLokasi]').change(function() {
+        selectedKecamatan = [];
+        $('input[name="cbLokasi"]:checked').each(function() {
+          selectedKecamatan.push(this.value);
+        });
+        getDataVenue();
       });
+
+      //function untuk list venue melihat kontak
+      $(document).on('click','.card-btn-call',function(){
+        itemData = dataVenue.response;
+        var itemIndex = $(this).attr('data-id');
+        
+        $('#modalCallHeader').text(itemData[itemIndex].name);
+        $('#modalCallBody').html('<h5 class="fw-7">Nomor Telpon :</h5>'+
+                              '<h6 class="fw-7 text-danger">'+itemData[itemIndex].official_number+'</h6>'+
+                              '<h6 class="fw-7 text-danger">'+itemData[itemIndex].contact_number+'</h6>');
+        $('#modalCall').modal('show');
+      });
+    
+    });
     </script>
 
   </body>

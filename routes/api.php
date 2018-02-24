@@ -17,5 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::prefix('v1')->group(function () {
-	Route::get('search', 'Api\SearchApi@getSearchData');
+	Route::post('search', 'Api\SearchApi@getSearchData');
 });

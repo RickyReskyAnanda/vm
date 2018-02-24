@@ -366,7 +366,7 @@ h5{
 .card-btn-call{
   cursor: pointer;
   font-weight: 700;
-  color:#288efbf5;
+  color:#288efbf5; 
 }
 .card-btn-call:hover{
   background: #eee;

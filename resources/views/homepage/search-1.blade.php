@@ -102,7 +102,7 @@
                 <h6 class="card-title">Filter Lokasi</h6>
                 @foreach($kecamatan as  $kec)
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" name="cbLokasi" class="custom-control-input" value="{{$kec->name}}" id="kec{{strtolower($kec->name)}}">
+                  <input type="checkbox" name="cbLokasi" class="custom-control-input" value="{{base64_encode(base64_encode($kec->id))}}" id="kec{{strtolower($kec->name)}}">
                   <label class="custom-control-label" for="kec{{strtolower($kec->name)}}">{{ucfirst(strtolower($kec->name))}}</label>
                 </div>
                 @endforeach
@@ -139,10 +139,9 @@
             <div class="card mb-2 br-1">
               <div class="card-body p-3" style="background:#E5EAED;">
                 <h6 class="card-title mb-3" style="font-weight: 700">Urutkan Berdasarkan</h6>
-                <a href="" class="saran-list">Saran</a>
-                <a href="" class="saran-list">Saran</a>
-                <a href="" class="saran-list">Saran</a>
-                <a href="" class="saran-list">Saran</a>
+                <!-- daftar list -->
+                <div class="saran-list urutan" data-id="1">Nama</div>
+
               </div>
             </div>
           </div>
@@ -306,21 +305,23 @@
         var dataLokasi = "{{$request->lokasi}}";
         var dataTipe = "{{$request->tipe}}";
         var dataVenue= [];
-        var selectedKecamatan = [];
+        var selectedKecamatan = "";
+        var urutan = 0;
         
         var getDataVenue = function(){
           $.ajax({
             url: "{{url('api/v1/search')}}", 
             method:'post',
             data: {
-                    'kecamatan':JSON.stringify(selectedKecamatan),
+                    'kecamatan':selectedKecamatan,
                     'lokasi':dataLokasi,
                     'tipe':dataTipe,
+                    'urutan':urutan,
                   },
             dataType:'json',
             success: function(result){
               dataVenue = result;
-              // setDataVenue();
+              setDataVenue();
             }
           });
         }
@@ -341,7 +342,7 @@
                       '</div>'+
                       '<div class="col-md-8">'+
                         '<h6 class="card-subtitle m-0 fw-7">'+itemData.type+'</h6>'+
-                        '<h5 class="card-title text-primary fw-7"><a href="">'+itemData.name+'</a></h5>'+
+                        '<h5 class="card-title text-primary fw-7"><a href="'+itemData.url_venue+'">'+itemData.name+'</a></h5>'+
                         '<small class="card-text"><i class="fa fa-map-marker"></i> '+itemData.lokasi+'</small><br/>'+
                         '<small class="card-text text-info">'+itemData.address.substr(0, 55)+'...</small>'+
                       '</div>'+
@@ -366,10 +367,19 @@
 
       //filter kecamatan
       $('input[name=cbLokasi]').change(function() {
-        selectedKecamatan = [];
+        selectedKecamatan = "";
         $('input[name="cbLokasi"]:checked').each(function() {
-          selectedKecamatan.push(this.value);
+          if(selectedKecamatan == "")
+            selectedKecamatan=this.value;
+          else
+            selectedKecamatan+=','+this.value;
         });
+        getDataVenue();
+      });
+
+      //filter untuk urutan 
+      $(document).on('click','.urutan',function(){
+        urutan = $(this).attr('data-id');
         getDataVenue();
       });
 
@@ -384,6 +394,8 @@
                               '<h6 class="fw-7 text-danger">'+itemData[itemIndex].contact_number+'</h6>');
         $('#modalCall').modal('show');
       });
+
+
     
     });
     </script>

@@ -36,6 +36,8 @@ class VenueController extends Controller
    		return view('administrator.venue.'.$detail->venue_kind.'-venue',compact('detail','tipeRuangan','gambarProfil','hari'));
    	}
    		public function postTambahVenue(Request $request){
+            // $text = simple_fields_value('textareaExample');
+            // echo $text;
    			$this->validate($request,[
    				'jenis' => 'required',
    				'nama' => 'required',

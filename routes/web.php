@@ -2,6 +2,7 @@
 Route::group(['middleware' => ['access-log-user']], function () {
 	Route::get('/', 'Homepage\HomepageController@viewHomepage');
 	Route::get('search', 'Homepage\SearchController@viewSearch');
+	Route::get('venue/{tipe}/{nama}.{id}', 'Homepage\DetailVenueController@viewVenue');
 	// Route::post('mahasiswa','Auth\LoginController@login');
 	// Route::post('mahasiswa','Auth\LoginController@login');
 	// Route::get('mahasiswa/logout','Auth\LoginController@logout');

@@ -17,6 +17,9 @@ class VenueModel extends Model
     public function getGallery(){
     	return $this->hasMany('App\Model\Venue\VenueGalleryModel','id_venue','id_venue');
     }
+    public function getSlider(){
+        return $this->hasMany('App\Model\Venue\VenueGalleryModel','id_venue','id_venue')->where('sts','1');
+    }
 
     public function getOperationalHours(){
     	return $this->hasMany('App\Model\Venue\VenueOperationalHoursModel','id_venue','id_venue');
@@ -24,6 +27,9 @@ class VenueModel extends Model
 
     public function getFacility(){
     	return $this->hasMany('App\Model\Venue\VenueFacilityModel','id_venue','id_venue');
+    }
+    public function getFacilityShow(){
+        return $this->hasMany('App\Model\Venue\VenueFacilityModel','id_venue','id_venue')->where('sts','1');
     }
 
 
@@ -36,5 +42,13 @@ class VenueModel extends Model
     }
     public function getKecamatan(){
         return $this->hasOne('App\Model\Area\AreaDistrictModel','id','district');
+    }
+
+    public function getPackage(){
+        return $this->hasMany('App\Model\Venue\VenuePackageModel','id_venue','id_venue')->where('sts','1');
+    }
+
+    public function getReview(){
+        return $this->hasMany('App\Model\Venue\VenueCommentModel','id_venue','id_venue')->where('sts','1');
     }
 }

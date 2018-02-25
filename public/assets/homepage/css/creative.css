@@ -352,6 +352,10 @@ h5{
   background-color: #fff;
   border-radius: .25rem;
   font-size: .8rem;
+  cursor:pointer;
+}
+.saran-list:hover{
+  background-color: #b9e1fe;
 }
 
 .scp-breadcrumb {

@@ -65,9 +65,11 @@ class SearchApi extends Controller
     		for ($i=0; $i < count($dataVenue); $i++) { 
     			$dataVenue[$i]->name = $dataVenue[$i]->venue_name;
     			$dataVenue[$i]->type = ucfirst($dataVenue[$i]->venue_type);
-    			$dataVenue[$i]->lokasi = ucwords(strtolower($dataVenue[$i]->getKecamatan->name.', '.$dataVenue[$i]->getKota->name.', '.$dataVenue[$i]->getProvinsi->name));
-    			$dataVenue[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($dataVenue[$i]->type)).'/'.str_replace(' ', '-',strtolower($dataVenue[$i]->name)).'.'.base64_encode(base64_encode($dataVenue[$i]->id_venue))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
-    		}
+                $dataVenue[$i]->lokasi = ucwords(strtolower($dataVenue[$i]->getKecamatan->name.', '.$dataVenue[$i]->getKota->name.', '.$dataVenue[$i]->getProvinsi->name));
+                $dataVenue[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($dataVenue[$i]->type)).'/'.str_replace(' ', '-',strtolower($dataVenue[$i]->name)).'.'.base64_encode(base64_encode($dataVenue[$i]->id_venue))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
+                if(isset($dataVenue[$i]->getProfil->url))
+        			$dataVenue[$i]->image_profil = $dataVenue[$i]->getProfil->url;
+            }
 
     	}elseif($homeVenueType->type == '1'){
     		$dataKind = 'room';

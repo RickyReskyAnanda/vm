@@ -5,10 +5,10 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Reservasi dan Booking venue mudah, cepat secara online">
+    <meta name="author" content="ceklokasi.id">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('assets/homepage/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -37,30 +37,7 @@
   <body id="page-top">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink p-0" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger p-0" href="#page-top">Ceklokasi</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">Menjadi Partner</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Bantuan</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#portfolio">Daftar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Log Masuk</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    @include('homepage.navbar')
 
     <header class="text-white d-flex border-bottom bg-light">
       <div class="container mb-1 mt-5">
@@ -99,18 +76,20 @@
       </div>
     </header>
 
-    <section class="pt-3">
+    <section class="pt-3 pb-0">
       <div class="container">
         <!-- row -->
         <div class="row">
           <div class="col px-1">
+            <small>
             <nav aria-label="breadcrumb" >
               <ol class="breadcrumb p-0" style="background: #f3f3f3;">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Library</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Data</li>
+                <li class="breadcrumb-item">{{ucwords(strtolower($detail->getProvinsi->name))}}</li>
+                <li class="breadcrumb-item">{{ucwords(strtolower($detail->getKota->name))}}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{$detail->venue_name}}</li>
               </ol>
             </nav>
+            </small>
           </div>
         </div>
 
@@ -128,7 +107,7 @@
                           $i++;
                   ?>
                   <div class="carousel-item <?php if($i==1)echo 'active';?>">
-                    <img class="d-block img-fluid mx-auto" src="https://images.pexels.com/photos/247599/pexels-photo-247599.jpeg?h=350&auto=compress&cs=tinysrgb" style="height: 400px;" alt="Second slide">
+                    <img class="d-block img-fluid mx-auto" src="{{$slide->url}}" style="height: 400px;" alt="{{$slide->name}}">
                   </div>
                   <?php } ?>
                 </div>
@@ -145,12 +124,6 @@
                 <h4 class="card-title fw-7"><?=$detail->venue_name?></h4>
                 <p class="card-text"><?=ucwords($detail->venue_type)?> di <?=ucwords(strtolower($detail->getKota->name))?></p>
                 <p class="card-text"><?=ucfirst($detail->information)?></p>
-              </div>
-              <div class="card-footer no-border p-0 text-center">
-                <div class="row m-0">
-                  <a href="" class="col border p-2 fw-7" ><h5><i class="fa fa-phone"></i> <b>Call</b></h5></a>
-                  <a href="" class="col border p-2 fw-7"><h5><i class="fa fa-book"></i> <b>Book</b></h5></a>
-                </div>
               </div>
             </div><!-- batas card -->
 
@@ -179,7 +152,9 @@
             <div class="card mb-3">
               <div class="card-body">
                 <div class="row">
+                  @if(count($detail->getFacilityShow)>0 && count($detail->venue_usage)>0)
                   <div class="col">
+                    @if(count($detail->getFacilityShow)>0)
                     <div class="row mb-4">
                       <div class="col">
                         <h6 class="card-title fw-7">Fasilitas</h6>
@@ -188,15 +163,20 @@
                         @endforeach
                       </div>
                     </div>
+                    @endif
+                    
+                    @if(count($detail->venue_usage)>0)
                     <div class="row">
                       <div class="col">
                         <h6 class="card-title fw-7">Kegunaan</h6>
-                        <div> Meeting Room</div>
-                        <div> Alumni</div>
-                        <div> Birtday Party</div>
+                        @for($i=0;$i<count($detail->venue_usage);$i++)
+                        <div> {{$detail->venue_usage[$i]}}</div>
+                        @endfor
                       </div>
                     </div>
+                    @endif
                   </div>
+                  @endif
                   <div class="col">
                     <div class="row mb-2">
                       <div class="col">
@@ -205,10 +185,33 @@
                             @if(isset($oh->start))
                             <h6 class="card-title fw-7">Jam Buka</h6>
                             <div>Hari Ini {{$oh->start}}:00 -  {{$oh->end}}:00</div>
-                            <div><small><a href="">Lihat lainnya</a></small></div>
                             @endif
                           @endif
                         @endforeach
+                        <div class="dropdown show">
+                          <a class="dropdown-toggle" href="javascript:;" role="button" id="dropdownMenuLinka" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <small>Lihat Lainnya</small>
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuLinka">
+                          <?php 
+                            $hari[0]='Minggu';
+                            $hari[1]='Senin';
+                            $hari[2]='Selasa';
+                            $hari[3]='Rabu';
+                            $hari[4]='Kamis';
+                            $hari[5]='Jumat';
+                            $hari[6]='Sabtu';
+                          ?>
+                          @foreach($detail->getOperationalHours as $oh)
+                            
+                            @if($oh->day == date('w'))
+                            <div class="dropdown-item"><b class="text-danger">{{$hari[$oh->day]}} {{$oh->start}}:00 -  {{$oh->end}}:00</b></div>
+                            @else
+                            <div class="dropdown-item">{{$hari[$oh->day]}} {{$oh->start}}:00 -  {{$oh->end}}:00</div>
+                            @endif
+                          @endforeach
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <!-- <div class="row">
@@ -280,8 +283,6 @@
               <div class="card-body px-0 py-0">
                   <!-- listnya -->
                   <div id="map" class="px-0 mx-0"></div>
-
-
               </div>  
             </div><!-- batas card -->
 
@@ -332,12 +333,17 @@
                     <div class="dropdown-divider mb-3"></div>
                     <h6 class="card-subtitle text-primary">Ruangan 50</h6>
                     <h5 class="card-title">Upper Hils Makassar</h5> -->
-                    <button class="btn btn-warning btn-lg btn-block">Book</button>
+                    @if(isset($detail->website))
+                    <a href="{{$detail->website}}" target="_blank" class="btn btn-warning btn-lg btn-block">Book</a>
+                    @else
+                    <button class="btn btn-block btn-warning btn-lg" data-toggle="modal" data-target="#modalCall"><i class="fa fa-phone"></i> Call</button>
+                    @endif
                   </div>
                 </div>
               </div>
             </div>
             <!-- venue terdekat -->
+            @if(count($detail->venue_terdekat)>0)
             <div class="row">
               <div class="col px-1">
                 <div class="card">
@@ -347,28 +353,22 @@
 
                     <div class="list-group list-group-flush">
                       <!-- listnya -->
+                      @foreach($detail->venue_terdekat as $terdekat)
                       <div class="list-group-item px-0 py-2">
-                        <div class="row">
-                          <div class="col-sm-2">
-                            <img src="https://b.zmtcdn.com/data/pictures/8/16564478/fa9d9a7a73d58f62223fd6635918e3ae_featured_v2.jpg?fit=around%7C40%3A40&crop=40%3A40%3B%2A%2C%2A  "> 
+                        <a href="{{$terdekat->url_venue}}">
+                          <div class="row">
+                            <div class="col-sm-2">
+                              <img src="https://b.zmtcdn.com/data/pictures/8/16564478/fa9d9a7a73d58f62223fd6635918e3ae_featured_v2.jpg?fit=around%7C40%3A40&crop=40%3A40%3B%2A%2C%2A  "> 
+                            </div>
+                            <div class="col-sm-10">
+                              <h6 class="m-0"><b>{{ucfirst($terdekat->venue_name)}}</b></h6>
+                              <small>{{ucfirst($terdekat->venue_type)}}</small>
+                            </div>
                           </div>
-                          <div class="col-sm-10">
-                            <h6 class="m-0"><b>Cras justo odio</b></h6>
-                            <small>Meeting Room</small>
-                          </div>
-                        </div>
+                        </a>
                       </div>
-                      <div class="list-group-item px-0 py-2">
-                        <div class="row">
-                          <div class="col-sm-2">
-                            <img src="https://b.zmtcdn.com/data/pictures/8/16564478/fa9d9a7a73d58f62223fd6635918e3ae_featured_v2.jpg?fit=around%7C40%3A40&crop=40%3A40%3B%2A%2C%2A  "> 
-                          </div>
-                          <div class="col-sm-10">
-                            <h6 class="m-0"><b>Cras justo odio</b></h6>
-                            <small>Mamajang, Kota Makassar</small>
-                          </div>
-                        </div>
-                      </div>
+                      @endforeach
+                      
                       <!-- batas list -->
                       
                     </div>
@@ -376,13 +376,14 @@
                 </div>
               </div>
             </div>
+            @endif
           </div>
         </div>
         <!-- batas row -->
       </div>  
     </section>
 
-    <section>
+    <section class="mt-1">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mx-auto">
@@ -443,6 +444,19 @@
       </div>
     </section>
     @include('homepage.footer')
+    <!-- modal call -->
+    <div class="modal fade bd-example-modal-sm" id="modalCall" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body text-center" id="modalCallBody">
+            <h5 class="fw-7">Nomor Telpon :</h5>
+            <h6 class="fw-7 text-danger">{{$detail->official_number}}</h6>
+            <h6 class="fw-7 text-danger">{{$detail->contact_number}}</h6>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <!-- Bootstrap core JavaScript -->
@@ -514,8 +528,8 @@
           }
         });
       });
-    </script>
-    <script>
+    
+
       function initMap() {
         var uluru = {lat: -25.363, lng: 131.044};
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -527,6 +541,7 @@
           map: map
         });
       }
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoq04fAVg-LNmUp4jisrlUBtCphBA5l6c&callback=initMap">

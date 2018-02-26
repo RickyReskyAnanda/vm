@@ -1,11 +1,19 @@
 <?php
 Route::group(['middleware' => ['access-log-user']], function () {
-	Route::get('/', 'Homepage\HomepageController@viewHomepage');
+	Route::get('/', 'Homepage\HomepageController@viewMaintenance');
+	// Route::get('/', 'Homepage\HomepageController@viewHomepage');
 	Route::get('search', 'Homepage\SearchController@viewSearch');
 	Route::get('venue/{tipe}/{nama}.{id}', 'Homepage\DetailVenueController@viewVenue');
+
+	// -----Support-----
+	//menjadi partner
+	Route::get('menjadi-partner','Homepage\SupportController@viewMenjadiPartner');
+	Route::post('menjadi-partner','Homepage\SupportController@postMenjadiPartner');
+
+	//tentang kami
+	Route::get('tentang-kami','Homepage\SupportController@viewTentangKami');
 	// Route::post('mahasiswa','Auth\LoginController@login');
 	// Route::post('mahasiswa','Auth\LoginController@login');
-	// Route::get('mahasiswa/logout','Auth\LoginController@logout');
 });
 
 Route::group(['middleware' => ['access-log']], function () {

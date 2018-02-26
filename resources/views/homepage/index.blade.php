@@ -5,10 +5,11 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Reservasi dan Booking venue mudah, cepat secara online">
+    <meta name="author" content="ceklokasi.id">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
+
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('assets/homepage/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -30,30 +31,7 @@
   <body id="page-top">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Ceklokasi</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="{{url('menjadi-partner')}}">Menjadi Partner</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="{{url('bantuan')}}">Bantuan</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="{{url('user/daftar')}}">Daftar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="{{url('user')}}">Log Masuk</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    @include('homepage.navbar-home')
 
     <header class="masthead text-center text-white d-flex">
       <div class="container my-auto">

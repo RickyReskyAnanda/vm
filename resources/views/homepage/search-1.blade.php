@@ -5,10 +5,11 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Reservasi dan Booking venue mudah, cepat secara online">
+    <meta name="author" content="ceklokasi.id">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
+
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('assets/homepage/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -29,30 +30,7 @@
   <body id="page-top">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink p-0" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger p-0" href="#page-top">Ceklokasi</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">Menjadi Partner</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Bantuan</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#portfolio">Daftar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Log Masuk</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    @include('homepage.navbar')
 
     <header class="text-white d-flex border-bottom bg-light">
       <div class="container mb-1 mt-5">
@@ -150,7 +128,7 @@
       </div>  
     </section>
 
-    <section>
+    <section class="mt-1">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mx-auto">
@@ -159,51 +137,51 @@
         </div>
         <p>Temukan venue berdasarkan tipenya  </p>
         <div class="row">
-          <div class="col-lg-2">
+          <div class="col">
             <div class="card bg-shadow no-border">
-              <img class="card-img-top" src="https://www.quackit.com/pix/samples/12s.jpg" alt="Card image cap">
+              <img class="card-img-top" src="{{asset('images/home/type/cafe-and-resto.jpg')}}" alt="Card image cap">
               <div class="card-header">
-                <strong><h6 class="card-text">Keluarga</h6></strong>
+                <label style="font-size: 14px !important;">Cafe & Resto</label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-shadow no-border">
+              <img class="card-img-top" src="{{asset('images/home/type/cafe.jpg')}}" alt="Card image cap">
+              <div class="card-header">
+                <label style="font-size: 14px !important;">Cafe</label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-shadow no-border">
+              <img class="card-img-top" src="{{asset('images/home/type/meeting-room.jpg')}}" alt="Card image cap">
+              <div class="card-header">
+                <label style="font-size: 14px !important;">Meeting Room</label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-shadow no-border">
+              <img class="card-img-top" src="{{asset('images/home/type/conference-room.jpg')}}" alt="Card image cap">
+              <div class="card-header">
+                <label style="font-size: 14px !important;">Conference Room</label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-shadow no-border">
+              <img class="card-img-top" src="{{asset('images/home/type/ballroom.jpg')}}" alt="Card image cap">
+              <div class="card-header">
+                <label style="font-size: 14px !important;">Ball Room</label>
               </div>
             </div>
           </div>
           <div class="col-lg-2">
             <div class="card bg-shadow no-border">
-              <img class="card-img-top" src="https://www.quackit.com/pix/samples/12s.jpg" alt="Card image cap">
+              <img class="card-img-top" src="{{asset('images/home/type/working-space.jpg')}}" alt="Card image cap">
               <div class="card-header">
-                <strong><h6 class="card-text">Sosial</h6></strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="card bg-shadow no-border">
-              <img class="card-img-top" src="https://www.quackit.com/pix/samples/12s.jpg" alt="Card image cap">
-              <div class="card-header">
-                <strong><h6 class="card-text">Perusahaan</h6></strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="card bg-shadow no-border">
-              <img class="card-img-top" src="https://www.quackit.com/pix/samples/12s.jpg" alt="Card image cap">
-              <div class="card-header">
-                <strong><h6 class="card-text">Bisnis</h6></strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="card bg-shadow no-border">
-              <img class="card-img-top" src="https://www.quackit.com/pix/samples/12s.jpg" alt="Card image cap">
-              <div class="card-header">
-                <strong><h6 class="card-text">Perusahaan</h6></strong>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="card bg-shadow no-border">
-              <img class="card-img-top" src="https://www.quackit.com/pix/samples/12s.jpg" alt="Card image cap">
-              <div class="card-header">
-                <strong><h6 class="card-text">Bisnis</h6></strong>
+                <label style="font-size: 14px !important;">Working Space</label>
               </div>
             </div>
           </div>
@@ -337,14 +315,14 @@
                 '<div class="card no-border">'+
                   '<div class="card-body p-2 border-top border-right border-left">'+
                     '<div class="row">'+
-                      '<div class="col-md-4">'+
-                        '<img class="br-1 " style="width: 100%" src="https://www.quackit.com/pix/samples/12s.jpg" alt="Card image cap">'+
+                      '<div class="col-md-3">'+
+                        '<img class="br-7 " style="width: 100%" src="'+itemData.image_profil+'"  onerror="imgError(this);" alt="Card image cap">'+
                       '</div>'+
-                      '<div class="col-md-8">'+
+                      '<div class="col-md-9 pl-0">'+
                         '<h6 class="card-subtitle m-0 fw-7">'+itemData.type+'</h6>'+
                         '<h5 class="card-title text-primary fw-7"><a href="'+itemData.url_venue+'">'+itemData.name+'</a></h5>'+
                         '<small class="card-text"><i class="fa fa-map-marker"></i> '+itemData.lokasi+'</small><br/>'+
-                        '<small class="card-text text-info">'+itemData.address.substr(0, 55)+'...</small>'+
+                        '<small class="card-text text-info">'+itemData.address.substr(0, 65)+'...</small>'+
                       '</div>'+
                     '</div>'+
                     '<div class="dropdown-divider"></div>'+
@@ -395,9 +373,15 @@
         $('#modalCall').modal('show');
       });
 
-
+      //funtion untuk mengganti gambar yang error loading
     
     });
+
+      function imgError(image) {
+        image.onerror = "";
+        image.src = "{{asset('images/error/placeholder_200.jpg')}}";
+        return true;
+    }
     </script>
 
   </body>

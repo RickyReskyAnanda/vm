@@ -16,4 +16,8 @@ class HomepageController extends Controller
     	$venueType = HomeVenueTypeModel::orderBy('sort_type','asc')->get();
     	return view('homepage.index ',compact('regencyCooperate','setting','venueType'));
     }
+
+    public function viewMaintenance(){
+    	return view('homepage.undermaintenance');
+    }
 }

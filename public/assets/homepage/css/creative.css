@@ -339,6 +339,9 @@ h5{
 .br-1{
   border-radius: 2px !important;
 }
+.br-7{
+  border-radius: 7px !important;
+}
 
 .saran-list{
   display: -webkit-box;

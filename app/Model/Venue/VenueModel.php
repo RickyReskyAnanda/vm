@@ -20,7 +20,9 @@ class VenueModel extends Model
     public function getSlider(){
         return $this->hasMany('App\Model\Venue\VenueGalleryModel','id_venue','id_venue')->where('sts','1');
     }
-
+    public function getProfil(){
+        return $this->hasOne('App\Model\Venue\VenueGalleryModel','id_venue','id_venue')->where('profil','1');
+    }
     public function getOperationalHours(){
     	return $this->hasMany('App\Model\Venue\VenueOperationalHoursModel','id_venue','id_venue');
     }

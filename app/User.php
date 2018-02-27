@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'password','sts',
+        'name', 'email', 'password','active','activation_key','key_pw',
     ];
 
     /**
@@ -24,8 +24,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','key_pw',
     ];
+
+
+
 
     public function jumlahDataUjian(){
         return $this->hasMany('App\Model\UjianModel','id_user','id');

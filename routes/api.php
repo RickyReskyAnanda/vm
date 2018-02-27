@@ -18,4 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::prefix('v1')->group(function () {
 	Route::post('search', 'Api\SearchApi@getSearchData');
+
+	Route::prefix('venue')->group(function () {
+		Route::get('getvenuetype/{venueKind}', 'Api\Administrator\VenueApi@getVenueTypeByVenueKind');
+	});
+	Route::prefix('area')->group(function () {
+		Route::get('getcitybyprovince/{id}', 'Api\Administrator\AreaApi@getCityByProvince');
+		Route::get('getdistrictbycity/{id}', 'Api\Administrator\AreaApi@getDistrictByCity');
+	});
 });

@@ -32,21 +32,21 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|min:6|max:32',
-            'password' => 'required|min:6|max:32',
+            'email' => 'required|min:6|email|string',
+            'password' => 'required|min:6|string',
         ]);
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password],true))
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password,'active' => '1'],true))
         {
-            return redirect('mahasiswa');
+            Auth::login(Auth::user(), true);
+            return redirect()->back();
         }
         else{
-            return redirect()->back()->with('pesan', 'Username atau Password Anda salah.');
+            return redirect()->back()->with('log_error', 'Email atau Password Anda salah.');
         }
     }
 
     public function logout(){
-        
         Auth::logout();
-        return redirect('/');
+        return redirect()->back();
     }
 }

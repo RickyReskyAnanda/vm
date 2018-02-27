@@ -9,15 +9,21 @@
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{{url('menjadi-partner')}}">Menjadi Partner</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{{url('bantuan')}}">Bantuan</a>
+        </li> -->
+        @if(Auth::check())
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="{{url('logout')}}">Log Out</a>
+        </li>
+        @else
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="javascript:;"  data-toggle="modal" data-target="#daftarUser" >Daftar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="{{url('user/daftar')}}">Daftar</a>
+          <a class="nav-link js-scroll-trigger" href="javascript:;" data-toggle="modal" data-target="#loginUser">Log In</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="{{url('user')}}">Log Masuk</a>
-        </li>
+        @endif
       </ul>
     </div>
   </div>

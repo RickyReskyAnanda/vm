@@ -43,3 +43,7 @@
     </div>
   </div>
 </section>
+@if(!Auth::check())
+@include('homepage.user.daftar')
+@include('homepage.user.login')
+@endif

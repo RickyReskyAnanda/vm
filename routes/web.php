@@ -13,7 +13,30 @@ Route::group(['middleware' => ['access-log-user']], function () {
 	//tentang kami
 	Route::get('tentang-kami','Homepage\SupportController@viewTentangKami');
 	// Route::post('mahasiswa','Auth\LoginController@login');
-	// Route::post('mahasiswa','Auth\LoginController@login');
+	Route::post('login','Auth\LoginController@login');
+	Route::get('logout','Auth\LoginController@logout');
+	Route::post('daftar','Auth\RegisterController@register');
+	Route::get('activation/{key}','Auth\RegisterController@activation');
+
+	Route::get('kirim-email',function(){
+		// Variable data ini yang berupa array ini akan bisa diakses di dalam "view".
+	    $data = ['prize' => 'Peke', 'total' => 3 ];
+	 
+	    // "emails.hello" adalah nama view.
+	    Mail::send('emails.users.verifikasi', $data, function ($mail)
+	    {
+	      // Email dikirimkan ke address "momo@deviluke.com" 
+	      // dengan nama penerima "Momo Velia Deviluke"
+	      $mail->to('60200114019@uin-alauddin.ac.id', 'Ricky Resky Ananda');
+	 
+	      // Copy carbon dikirimkan ke address "haruna@sairenji" 
+	      // dengan nama penerima "Haruna Sairenji"
+	      // $mail->cc('haruna@sairenji', 'Haruna Sairenji');
+	 
+	      $mail->subject('Hello World!');
+	    });
+		
+	});
 });
 
 Route::group(['middleware' => ['access-log']], function () {
@@ -37,6 +60,8 @@ Route::group(['middleware' => ['access-log']], function () {
 		Route::post('sandwich/venue/fasilitas/tambah','Administrator\VenueController@postTambahFasilitasVenue');
 		Route::get('sandwich/venue/fasilitas/show-hide.{id}','Administrator\VenueController@postShowHideFasilitasVenue');
 		Route::get('sandwich/venue/fasilitas/hapus.{id}','Administrator\VenueController@postHapusFasilitasVenue');
+		//pengaturan data venue
+		Route::post('sandwich/venue/pengaturan','Administrator\VenueController@postEditPengaturanVenue');
 
 	Route::post('sandwich/venue/ruangan/tambah','Administrator\RoomController@postTambahRuangan');
 	Route::post('sandwich/venue/ruangan/hapus','Administrator\RoomController@postHapusRuangan');

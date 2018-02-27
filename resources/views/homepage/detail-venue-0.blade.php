@@ -10,19 +10,8 @@
 
     <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{asset('assets/homepage/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-    <link href="{{asset('assets/homepage/vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-
-    <!-- Plugin CSS -->
-    <link href="{{asset('assets/homepage/vendor/magnific-popup/magnific-popup.css')}}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{{asset('assets/homepage/css/creative.css')}}" rel="stylesheet">
+    @include('homepage.library.header')
+   
     <style>
       #map {
         width: 100%;
@@ -460,13 +449,7 @@
 
 
     <!-- Bootstrap core JavaScript -->
-    <script src="{{asset('assets/homepage/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('assets/homepage/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="{{asset('assets/homepage/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-    <script src="{{asset('assets/homepage/vendor/scrollreveal/scrollreveal.min.js')}}"></script>
-    <script src="{{asset('assets/homepage/vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
+    @include('homepage.library.footer')
 
     <!-- Custom scripts for this template -->
     <!-- <script src="js/creative.min.js"></script> -->

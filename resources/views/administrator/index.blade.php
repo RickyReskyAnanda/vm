@@ -21,6 +21,7 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/administrator/img/apple-icon.png')}}">
 	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('assets/administrator/img/favicon.png')}}">
+	<script src="{{asset('assets/administrator/vendor/jquery/jquery.min.js')}}"></script>
 	<style type="text/css">
 		.label{
 			font-size: 100%;
@@ -178,7 +179,6 @@
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
-	<script src="{{asset('assets/administrator/vendor/jquery/jquery.min.js')}}"></script>
 	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 

@@ -8,7 +8,12 @@ use App\Model\Venue\VenueModel;
 use App\Model\Venue\VenueOperationalHoursModel;
 use App\Model\Venue\VenueGalleryModel;
 use App\Model\Venue\VenueFacilityModel;
-use App\Model\room\RoomTypeModel;
+use App\Model\Venue\VenueKindModel;
+use App\Model\Venue\VenueTypeModel;
+use App\Model\Area\AreaProvinceModel;
+use App\Model\Area\AreaRegencyModel;
+use App\Model\Area\AreaDistrictModel;
+use App\Model\Room\RoomTypeModel;
 use File;
 
 class VenueController extends Controller
@@ -20,20 +25,26 @@ class VenueController extends Controller
 
    	public function viewDetailVenue($id){
    		$id = base64_decode(base64_decode($id));
-		$detail = VenueModel::find($id);
-      
-		$tipeRuangan = RoomTypeModel::where('venue_type',$detail->venue_type)->where('venue_kind',$detail->venue_kind)->where('show','1')->get();
-		$gambarProfil = VenueGalleryModel::where('id_venue',$detail->id_venue)->where('profil','1')->first();
+   		$detail = VenueModel::find($id);
+         
+   		$tipeRuangan = RoomTypeModel::where('venue_type',$detail->venue_type)->where('venue_kind',$detail->venue_kind)->where('show','1')->get();
+         $gambarProfil = VenueGalleryModel::where('id_venue',$detail->id_venue)->where('profil','1')->first();
 
-		$hari[0] = 'Minggu';
-		$hari[1] = 'Senin';
-		$hari[2] = 'Selasa';
-		$hari[3] = 'Rabu';
-		$hari[4] = 'Kamis';
-		$hari[5] = 'Jumat';
-		$hari[6] = 'Sabtu';
+         $hari[0] = 'Minggu';
+         $hari[1] = 'Senin';
+         $hari[2] = 'Selasa';
+         $hari[3] = 'Rabu';
+         $hari[4] = 'Kamis';
+         $hari[5] = 'Jumat';
+         $hari[6] = 'Sabtu';
+         //set data edit venue
+         $venueKind = VenueKindModel::all();
+         $venueType = VenueTypeModel::where('venue_kind',$detail->venue_kind)->get();
+         $areaProvince = AreaProvinceModel::all();
+         $areaCity = AreaRegencyModel::where('province_id',$detail->province)->get();
+         $areaDistrict = AreaDistrictModel::where('regency_id',$detail->city)->get();
 
-   		return view('administrator.venue.'.$detail->venue_kind.'-venue',compact('detail','tipeRuangan','gambarProfil','hari'));
+   		return view('administrator.venue.detail-venue',compact('detail','tipeRuangan','gambarProfil','hari','venueKind','venueType','areaProvince','areaCity','areaDistrict'));
    	}
    		public function postTambahVenue(Request $request){
             // $text = simple_fields_value('textareaExample');
@@ -53,17 +64,11 @@ class VenueController extends Controller
    			$data->venue_name 		= $request->nama;
    			if(isset($request->kontak))
 	   			$data->contact_number 	= $request->kontak;
-	   		else
-	   			$data->contact_number 	= '-';
 
    			if(isset($request->nomor_kantor))
 	   			$data->official_number 	= $request->nomor_kantor;
-	   		else
-	   			$data->official_number 	= '-';
    			if(isset($request->email_kantor))
 	   			$data->official_email 	= $request->email_kantor;
-	   		else
-	   			$data->official_email 	= '-';
    			$data->address 			= $request->alamat;
    			$data->information 		= $request->informasi;
    			$data->cooperate 		= 0;
@@ -236,6 +241,67 @@ class VenueController extends Controller
    			VenueFacilityModel::destroy($id);
    			return redirect()->back()->with('pesan','Data Fasilitas telah diperbaharui');
    		}
+
+         public function postEditPengaturanVenue(Request $request){
+            $this->validate($request,[
+               "id_venue"        => "required",
+               "venue_name"      => "required",
+               "venue_kind"      => "required",
+               "venue_type"      => "required",
+               "room"            => "nullable",
+               "cooperate"       => "nullable",
+               "contact_name"    => "nullable",
+               "contact_number"  => "nullable",
+               "contact_email"   => "nullable",
+               "official_number" => "nullable",
+               "official_email"  => "nullable",
+               "website"         => "nullable",
+               "address"         => "required",
+               "province"        => "required|numeric",
+               "city"            => "required|numeric",
+               "district"        => "required|numeric",
+               "lat"             => "nullable",
+               "lon"             => "nullable",
+            ]);
+
+            $id = base64_decode(base64_decode($request->id_venue));
+
+
+
+            $venue = VenueModel::find($id);
+            $venue->venue_name = $request->venue_name;
+            $venue->venue_kind = $request->venue_kind;
+            $venue->venue_type = $request->venue_type;
+            $venue->room = $request->room;
+            $venue->cooperate = $request->cooperate;
+            if(isset($request->contact_name))
+               $venue->contact_name = $request->contact_name;
+            if(isset($request->contact_number))
+               $venue->contact_number = $request->contact_number;
+            if(isset($request->contact_email))
+               $venue->contact_email = $request->contact_email;
+            if(isset($request->official_number))
+               $venue->official_number = $request->official_number;
+            if(isset($request->official_email))
+               $venue->official_email = $request->official_email;
+            if(isset($request->website))
+               $venue->website = $request->website;
+
+            $venue->address = $request->address;
+            $venue->province = $request->province;
+            $venue->city = $request->city;
+            $venue->district = $request->district;
+
+            if(isset($request->lat))
+               $venue->lat = $request->lat;
+            if(isset($request->lon))
+               $venue->lon = $request->lon;
+
+            $venue->save();
+
+            return redirect()->back()->with('pesan','Data pengaturan telah diperbaharui');
+
+         }
 
 
 }

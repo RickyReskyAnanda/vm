@@ -21,4 +21,16 @@ class RoomModel extends Model
     public function getFacility(){
     	return $this->hasMany('App\Model\Room\RoomFacilityModel','id_room','id_room');
     }
+    public function getProfil(){
+        return $this->hasOne('App\Model\Room\RoomGalleryModel','id_room','id_room')->where('profil','1');
+    }
+
+    //
+    public function getVenue(){
+        return $this->hasOne('App\Model\Venue\VenueModel','id_venue','id_venue');
+    }
+
+    public function getReview(){
+        return $this->hasMany('App\Model\Review\ReviewModel','id','id_room')->where('kind','room');
+    }
 }

@@ -17,7 +17,6 @@
   <body id="page-top" style="background: #fff">
 
     <!-- Navigation -->
-    @include('homepage.navbar-home')
 
     <section class="mt-5" >
       <div class="container">
@@ -42,32 +41,6 @@
         </div>
       </div>
     </section>
-    <section id="contact">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading">Solusi Sempurna Untuk Penyedia Booking Venue</h2>
-            <hr class="my-4">
-            <p>Anda bisa menawarkan kepada Ceklokasi Venue mana yang harus kami ajak kerjasama.</p>
-            <p>Ceklokasi mempermudah reservasi dan booking serta memberikan penggunaan sistem Ceklokasi khusus untuk pengelolaan venue.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 ml-auto text-center">
-            <i class="fa fa-whatsapp fa-3x mb-3 sr-contact"></i>
-            <p>081-355-553-758</p>
-          </div>
-          <div class="col-lg-4 mr-auto text-center">
-            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
-            <p>
-              <a href="mailto:cs@ceklokasi.id">cs@ceklokasi.id</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section> 
-
-    @include('homepage.footer')
 
     <!-- Bootstrap core JavaScript -->
     @include('homepage.library.footer')

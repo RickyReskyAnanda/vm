@@ -25,10 +25,18 @@ class SearchController extends Controller
     	if(isset($regency->id_regency)){
 	    	$kecamatan = AreaDistrictModel::where('regency_id',$regency->id_regency)->get(); 
     	}
-    	
-    	
+        //mengubah id ke string untuk bisa dienkripsi
+        for ($i=0; $i < count($kecamatan); $i++) { 
+            $kecamatan[$i]->id_district = base64_encode(base64_encode(strval($kecamatan[$i]->id)));
+        }
 
-    	return view('homepage.search-1',compact('regencyCooperate','venueType','setting','request','kecamatan'));
+        $type = HomeVenueTypeModel::where('name',$request->tipe)->first();
+        if(!isset($type->output_model))
+            return redirect()->back();
+        if($type->output_model == '0')
+            return view('homepage.search-1',compact('regencyCooperate','venueType','setting','request','kecamatan'));
+        else
+        	return view('homepage.search-0',compact('regencyCooperate','venueType','setting','request','kecamatan'));
     }
 
     

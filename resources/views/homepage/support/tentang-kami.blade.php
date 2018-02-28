@@ -93,13 +93,13 @@
         </div>
         <div class="row">
           <div class="col-lg-4 ml-auto text-center">
-            <i class="fa fa-whatsapp fa-3x mb-3 sr-contact"></i>
+            <i class="fa fa-whatsapp fa-3x mb-3 sr-contact text-success"></i>
             <p>081-355-553-758</p>
           </div>
           <div class="col-lg-4 mr-auto text-center">
             <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
             <p>
-              <a href="mailto:feedback@ceklokasi.id">cs@ceklokasi.id</a>
+              <a href="mailto:cs@ceklokasi.id">cs@ceklokasi.id</a>
             </p>
           </div>
         </div>

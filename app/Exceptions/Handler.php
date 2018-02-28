@@ -45,18 +45,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($this->isHttpException($e))
-        {
-            return response()->view('homepage.errors.404', [], 404);
+        if($this->isHttpException($e)){
+            if (view()->exists('homepage.errors.'.$e->getStatusCode()))
+            {
+                return response()->view('homepage.errors.'.$e->getStatusCode(), [], $e->getStatusCode());
+            }
         }
-        else if($e instanceof NotFoundHttpException)
-        {
-            return $this->renderHttpException($e);
-        }
-        else
-        {
-            return parent::render($request, $e);
-        }
+        return parent::render($request, $e);
     }
 
     /**

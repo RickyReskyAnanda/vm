@@ -1,9 +1,10 @@
 <?php
 Route::group(['middleware' => ['access-log-user']], function () {
-	Route::get('/', 'Homepage\HomepageController@viewMaintenance');
-	// Route::get('/', 'Homepage\HomepageController@viewHomepage');
+	// Route::get('/', 'Homepage\HomepageController@viewMaintenance');
+	Route::get('/', 'Homepage\HomepageController@viewHomepage');
 	Route::get('search', 'Homepage\SearchController@viewSearch');
-	Route::get('venue/{tipe}/{nama}.{id}', 'Homepage\DetailVenueController@viewVenue');
+	Route::get('venue/{tipe}/{nama}_{id}', 'Homepage\DetailVenueController@viewVenue');
+		Route::post('review/venue','Homepage\DetailVenueController@postReview');
 
 	// -----Support-----
 	//menjadi partner
@@ -18,25 +19,25 @@ Route::group(['middleware' => ['access-log-user']], function () {
 	Route::post('daftar','Auth\RegisterController@register');
 	Route::get('activation/{key}','Auth\RegisterController@activation');
 
-	Route::get('kirim-email',function(){
-		// Variable data ini yang berupa array ini akan bisa diakses di dalam "view".
-	    $data = ['prize' => 'Peke', 'total' => 3 ];
+	// Route::get('kirim-email',function(){
+	// 	// Variable data ini yang berupa array ini akan bisa diakses di dalam "view".
+	//     $data = ['prize' => 'Peke', 'total' => 3 ];
 	 
-	    // "emails.hello" adalah nama view.
-	    Mail::send('emails.users.verifikasi', $data, function ($mail)
-	    {
-	      // Email dikirimkan ke address "momo@deviluke.com" 
-	      // dengan nama penerima "Momo Velia Deviluke"
-	      $mail->to('60200114019@uin-alauddin.ac.id', 'Ricky Resky Ananda');
+	//     // "emails.hello" adalah nama view.
+	//     Mail::send('emails.users.verifikasi', $data, function ($mail)
+	//     {
+	//       // Email dikirimkan ke address "momo@deviluke.com" 
+	//       // dengan nama penerima "Momo Velia Deviluke"
+	//       $mail->to('60200114019@uin-alauddin.ac.id', 'Ricky Resky Ananda');
 	 
-	      // Copy carbon dikirimkan ke address "haruna@sairenji" 
-	      // dengan nama penerima "Haruna Sairenji"
-	      // $mail->cc('haruna@sairenji', 'Haruna Sairenji');
+	//       // Copy carbon dikirimkan ke address "haruna@sairenji" 
+	//       // dengan nama penerima "Haruna Sairenji"
+	//       // $mail->cc('haruna@sairenji', 'Haruna Sairenji');
 	 
-	      $mail->subject('Hello World!');
-	    });
+	//       $mail->subject('Hello World!');
+	//     });
 		
-	});
+	// });
 });
 
 Route::group(['middleware' => ['access-log']], function () {

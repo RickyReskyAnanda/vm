@@ -224,18 +224,18 @@
         </div>
         <div class="row">
           <div class="col-lg-4 ml-auto text-center">
-            <i class="fa fa-whatsapp fa-3x mb-3 sr-contact"></i>
+            <i class="fa fa-whatsapp fa-3x mb-3 sr-contact tex-success"></i>
             <p>081-355-553-758</p>
           </div>
           <div class="col-lg-4 mr-auto text-center">
             <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
             <p>
-              <a href="mailto:feedback@ceklokasi.id">cs@ceklokasi.id</a>
+              <a href="mailto:cs@ceklokasi.id">cs@ceklokasi.id</a>
             </p>
           </div>
         </div>
       </div>
-    </section> 
+    </section>
 
     @include('homepage.footer')
 
@@ -303,7 +303,10 @@
 
 
 
+
+
     </script>
+    <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: 'c32d5140-98b4-45f7-8dad-177a92c69407', f: true }); done = true; } }; })();</script>
 
   </body>
 

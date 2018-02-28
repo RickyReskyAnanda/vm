@@ -51,6 +51,6 @@ class VenueModel extends Model
     }
 
     public function getReview(){
-        return $this->hasMany('App\Model\Venue\VenueCommentModel','id_venue','id_venue')->where('sts','1');
+        return $this->hasMany('App\Model\Review\ReviewModel','id','id_venue')->where('kind','venue');
     }
 }

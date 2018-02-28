@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Home\HomeVenueTypeModel;
 use App\Model\Area\RegencyCooperateModel;
 use App\Model\Venue\VenueModel;
+use App\Model\Room\RoomModel;
 class SearchApi extends Controller
 {
     public function getSearchData(Request $request){
@@ -66,16 +67,39 @@ class SearchApi extends Controller
     			$dataVenue[$i]->name = $dataVenue[$i]->venue_name;
     			$dataVenue[$i]->type = ucfirst($dataVenue[$i]->venue_type);
                 $dataVenue[$i]->lokasi = ucwords(strtolower($dataVenue[$i]->getKecamatan->name.', '.$dataVenue[$i]->getKota->name.', '.$dataVenue[$i]->getProvinsi->name));
-                $dataVenue[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($dataVenue[$i]->type)).'/'.str_replace(' ', '-',strtolower($dataVenue[$i]->name)).'.'.base64_encode(base64_encode($dataVenue[$i]->id_venue))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
+                $dataVenue[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($dataVenue[$i]->type)).'/'.str_replace(' ', '-',strtolower($dataVenue[$i]->name)).'_'.base64_encode(base64_encode($dataVenue[$i]->id_venue))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
                 if(isset($dataVenue[$i]->getProfil->url))
         			$dataVenue[$i]->image_profil = $dataVenue[$i]->getProfil->url;
             }
 
     	}elseif($homeVenueType->type == '1'){
     		$dataKind = 'room';
-    		$dataVenue = RoomModel::where('venue_type',$venueType)->where('city',$kota->id_regency)->get();
-    	}
+            if(count($district)<1){
+        		$dataVenue = RoomModel::join('venue', 'room.id_venue', '=', 'venue.id_venue')
+                                        ->where('room.room_type',$venueType)
+                                        ->where('venue.city',$kota->id_regency)
+                                        ->get();
+            }elseif(count($district)>=1){
+                $dataVenue = RoomModel::join('venue', 'room.id_venue', '=', 'venue.id_venue')
+                                        ->where('room.room_type',$venueType)
+                                        ->where('venue.city',$kota->id_regency)
+                                        ->whereIn('venue.district',$district)
+                                        ->get();
+            }
 
+            //mengelola dan menyusun data sebelum di respon balik
+            for ($i=0; $i < count($dataVenue); $i++) { 
+                $dataVenue[$i]->type = ucfirst($dataVenue[$i]->room_type);
+                $dataVenue[$i]->lokasi = ucwords(strtolower($dataVenue[$i]->getVenue->getKecamatan->name.', '.$dataVenue[$i]->getVenue->getKota->name.', '.$dataVenue[$i]->getVenue->getProvinsi->name));
+                $dataVenue[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($dataVenue[$i]->type)).'/'.str_replace(' ', '-',strtolower($dataVenue[$i]->name)).'_'.base64_encode(base64_encode(strval($dataVenue[$i]->id_venue)))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
+                if(isset($dataVenue[$i]->getProfil->url))
+                    $dataVenue[$i]->image_profil = $dataVenue[$i]->getProfil->url;
+
+                //untuk menghilangkan data venue yang banyak
+                unset($dataVenue[$i]->getVenue);
+                unset($dataVenue[$i]->getProfil);
+            }
+    	}
     	return response()
 	            ->json(['response' => $dataVenue, 'kind' => $dataKind]);
     }

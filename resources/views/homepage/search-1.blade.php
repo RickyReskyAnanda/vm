@@ -82,7 +82,7 @@
             <div class="row" id="listDataVenue">
               <!-- isi list data pencarian -->
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-lg-12 mb-4 px-1">
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center">
@@ -98,7 +98,7 @@
                   </ul>
                 </nav>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="col-lg-3">

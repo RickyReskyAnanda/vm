@@ -12,6 +12,7 @@ class SupportController extends Controller
     	return view('homepage.support.menjadi-partner');
     }
     	public function postMenjadiPartner(Request $request){
+            return $request->all();
     		$this->validate($request,[
 				"cp_nama"			=>"required",
 				"cp_email"			=>"required|email",
@@ -21,8 +22,10 @@ class SupportController extends Controller
 				"venue_provinsi"	=>"required",
 				"venue_kota"		=>"required",
 				"venue_kecamatan"	=>"required",
-				"venue_alamat"		=>"required",
-				"venue_informasi"	=>"nullable",
+                "venue_alamat"      =>"required",
+                "venue_informasi"   =>"nullable",
+                "area_lat"          =>"required",
+				"area_lng"		    =>"required",
     		]);
     		
     		$data = new HomeVenueRegisterModel;
@@ -35,7 +38,10 @@ class SupportController extends Controller
     		$data->venue_kota = $request->venue_kota;
     		$data->venue_kecamatan = $request->venue_kecamatan;
     		$data->venue_alamat = $request->venue_alamat;
-    		$data->venue_informasi = $request->venue_informasi;
+            if(isset($request->venue_informasi))
+                $data->venue_informasi = $request->venue_informasi;
+            $data->latitude = $request->area_lat;
+    		$data->langitude = $request->area_lng;
     		$data->save();
 
 	    	return redirect()->back()->with('pesan','Terima Kasih, Informasi Anda telah disimpan. Kami akan menghubungi Anda segera.');

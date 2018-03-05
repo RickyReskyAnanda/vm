@@ -13,7 +13,7 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('assets/admin/bower_components/Ionicons/css/ionicons.min.css')}}">
 
-  <link rel="stylesheet" href="{{asset('assets/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+  <!-- <link rel="stylesheet" href="{{asset('assets/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}"> -->
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('assets/admin/dist/css/AdminLTE.min.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -242,22 +242,22 @@
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/dist/js/adminlte.min.js')}}"></script>
 <!-- Sparkline -->
-<script src="{{asset('assets/admin/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
+<!-- <script src="{{asset('assets/admin/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script> -->
 <!-- DataTables -->
 <!-- SlimScroll -->
 <script src="{{asset('assets/admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <!-- ChartJS -->
-<script src="{{asset('assets/admin/bower_components/Chart.js/Chart.js')}}"></script>
+<!-- <script src="{{asset('assets/admin/bower_components/Chart.js/Chart.js')}}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="{{asset('assets/admin/dist/js/pages/dashboard2.js')}}"></script> -->
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('assets/admin/dist/js/demo.js')}}"></script>
-<script src="{{asset('assets/admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<!-- <script src="{{asset('assets/admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script>
   $(function () {
     $('#tabel1').DataTable();
   })
-</script>
+</script> -->
 </body>
 </html>

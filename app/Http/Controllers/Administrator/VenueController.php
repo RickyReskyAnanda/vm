@@ -10,6 +10,7 @@ use App\Model\Venue\VenueGalleryModel;
 use App\Model\Venue\VenueFacilityModel;
 use App\Model\Venue\VenueKindModel;
 use App\Model\Venue\VenueTypeModel;
+use App\Model\Venue\VenuePackageModel;
 use App\Model\Area\AreaProvinceModel;
 use App\Model\Area\AreaRegencyModel;
 use App\Model\Area\AreaDistrictModel;
@@ -26,8 +27,11 @@ class VenueController extends Controller
    	public function viewDetailVenue($id){
    		$id = base64_decode(base64_decode($id));
    		$detail = VenueModel::find($id);
+         if(!isset($detail->id_venue))
+            return redirect('sandwich/venue')->with('pesan','Data tidak tersedia!');
          
    		$tipeRuangan = RoomTypeModel::where('sts','1')->get();
+         
          $gambarProfil = VenueGalleryModel::where('id_venue',$detail->id_venue)->where('profil','1')->first();
 
          $hari[0] = 'Minggu';
@@ -38,19 +42,18 @@ class VenueController extends Controller
          $hari[5] = 'Jumat';
          $hari[6] = 'Sabtu';
          //set data edit venue
-         $venueKind = VenueKindModel::all();
-         $venueType = VenueTypeModel::where('venue_kind',$detail->venue_kind)->get();
+         $venueType = VenueTypeModel::all();
          $areaProvince = AreaProvinceModel::all();
          $areaCity = AreaRegencyModel::where('province_id',$detail->province)->get();
          $areaDistrict = AreaDistrictModel::where('regency_id',$detail->city)->get();
+         $paket = VenuePackageModel::where('id_venue',$id)->get();
 
-   		return view('administrator.venue.detail-venue-1',compact('detail','tipeRuangan','gambarProfil','hari','venueKind','venueType','areaProvince','areaCity','areaDistrict'));
+   		return view('administrator.venue.detail-venue-1',compact('detail','tipeRuangan','gambarProfil','hari','venueType','areaProvince','areaCity','areaDistrict','paket'));
    	}
    		public function postTambahVenue(Request $request){
             // $text = simple_fields_value('textareaExample');
             // echo $text;
    			$this->validate($request,[
-   				'jenis' => 'required',
    				'nama' => 'required',
    				'kontak' => 'nullable',
    				'nomor_kantor' => 'nullable',
@@ -60,7 +63,6 @@ class VenueController extends Controller
    			]);
 
    			$data = new VenueModel;
-   			$data->venue_kind 		= $request->jenis;
    			$data->venue_name 		= $request->nama;
    			if(isset($request->kontak))
 	   			$data->contact_number 	= $request->kontak;
@@ -80,7 +82,7 @@ class VenueController extends Controller
 	   			$jadwal->day = $i;
 	   			$jadwal->save();
    			}
-   			return redirect('sandwich/venue/detail.'.base64_encode(base64_encode($data->id_venue)))->with('pesan','Data Venue Telah Ditambahkan');
+   			return redirect('sandwich/venue/detail.'.base64_encode(base64_encode(strval($data->id_venue))))->with('pesan','Data Venue Telah Ditambahkan');
    		}
 
    		public function postTambahGalleryVenue(Request $request){
@@ -246,9 +248,7 @@ class VenueController extends Controller
             $this->validate($request,[
                "id_venue"        => "required",
                "venue_name"      => "required",
-               "venue_kind"      => "required",
                "venue_type"      => "required",
-               "room"            => "nullable",
                "cooperate"       => "nullable",
                "contact_name"    => "nullable",
                "contact_number"  => "nullable",
@@ -270,9 +270,16 @@ class VenueController extends Controller
 
             $venue = VenueModel::find($id);
             $venue->venue_name = $request->venue_name;
-            $venue->venue_kind = $request->venue_kind;
             $venue->venue_type = $request->venue_type;
-            $venue->room = $request->room;
+            if(isset($request->is_venue) && $request->is_venue == 'on') $venue->is_venue = 1;
+               else $venue->is_venue=0;
+            if(isset($request->is_room) && $request->is_room == 'on') $venue->is_room = 1;
+               else $venue->is_room = 0;
+            if(isset($request->is_meja) && $request->is_meja == 'on') $venue->is_table = 1;
+               else $venue->is_table = 0;
+            if(isset($request->is_area) && $request->is_area == 'on') $venue->is_area = 1;
+               else $venue->is_area = 0;
+
             $venue->cooperate = $request->cooperate;
             if(isset($request->contact_name))
                $venue->contact_name = $request->contact_name;
@@ -293,15 +300,58 @@ class VenueController extends Controller
             $venue->district = $request->district;
 
             if(isset($request->lat))
-               $venue->lat = $request->lat;
+               $venue->latitude = $request->lat;
             if(isset($request->lon))
-               $venue->lon = $request->lon;
+               $venue->longitude = $request->lon;
 
             $venue->save();
 
             return redirect()->back()->with('pesan','Data pengaturan telah diperbaharui');
 
          }
+
+
+   public function postTambahPaketVenue(Request $request){
+
+      $this->validate($request,[
+         'id_venue'  => 'required',
+         'paket'     => 'required',
+         'nama'      => 'required',
+         'date_start'=> 'required',
+         'date_end'  => 'required',
+         'durasi_waktu' => 'required',
+         'durasi_satuan' => 'required',
+         'harga'     => 'required',
+         'harga_satuan' =>'required',
+         'dp' =>'required',
+         'deskripsi' =>'required'
+      ]);
+
+      $data = new VenuePackageModel;
+      $data->id_venue = base64_decode(base64_decode($request->id_venue));
+      $data->package = $request->paket;
+      $data->name = $request->nama;
+      $data->start = $request->date_start;
+      $data->end = $request->date_end;
+      $data->durasi_waktu = $request->durasi_waktu;
+      $data->durasi_satuan = $request->durasi_satuan;
+      $data->price = $request->harga;
+      $data->price_satuan = $request->harga_satuan;
+      $data->down_payment = $request->dp;
+      $data->informasi = $request->deskripsi;
+      $data->sts = '0';
+      $data->save();
+
+      return redirect()->back()->with('pesan','Data paket telah ditambahkan!');
+   }
+
+   public function postHapusPaketVenue($id){
+      $idPackage = base64_decode(base64_decode($id));
+
+      VenuePackageModel::destroy($idPackage);
+
+      return redirect()->back()->with('pesan','Data paket telah dihapus!');
+   }
 
 
 }

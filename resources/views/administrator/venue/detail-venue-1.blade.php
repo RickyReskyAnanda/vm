@@ -1,6 +1,7 @@
 @extends('administrator.index')
 
 @section('content')
+  <link rel="stylesheet" href="{{asset('assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -53,9 +54,17 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#pemesanan" data-toggle="tab">Pemesanan</a></li>
               <li><a href="#paket" data-toggle="tab">Paket</a></li>
+              @if($detail->is_room =='1')
+              <li><a href="#ruangan" data-toggle="tab">Ruangan</a></li>
+              @endif
+              @if($detail->is_area =='1')
+              <li><a href="#area" data-toggle="tab">Area</a></li>
+              @endif
+              @if($detail->is_table =='1')
+              <li><a href="#meja" data-toggle="tab">Meja</a></li>
+              @endif
               <li><a href="#jo" data-toggle="tab">Jam Operasional</a></li>
               <li><a href="#galeri" data-toggle="tab">Galeri</a></li>
-              <li><a href="#ruangan" data-toggle="tab">Ruangan</a></li>
               <li><a href="#fasilitas" data-toggle="tab">Fasilitas</a></li>
               <li><a href="#setting" data-toggle="tab">Settings</a></li>
             </ul>
@@ -65,6 +74,7 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="paket">
+                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahPaket"><i class="fa fa-plus" ></i> Tambah Paket</button>
                 <table id="tabel1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -76,12 +86,16 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td><div class="btn btn-info btn-sm"><i class="fa fa-trash"></i></div></td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td></td>
-                  </tr>
+                    @foreach($paket as $pakets)
+                    <tr>
+                      <td><div class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusPaket" onclick="setHapusPaket('{{base64_encode(base64_encode(strval($pakets->id_package)))}}')"><i class="fa fa-trash"></i></div></td>
+                      <td>{{$pakets->name}}</td>
+                      <td>{{number_format($pakets->price).',-'.$pakets->price_satuan}}</td>
+                      <td>{{$pakets->durasi_waktu.' '.$pakets->durasi_satuan}}</td>
+                      <td>{{$pakets->start}} - {{$pakets->end}}</td>
+                      <td><?=$pakets->informasi;?></td>
+                    </tr>
+                  @endforeach
                   </tbody>
                 </table>
               </div>
@@ -172,7 +186,7 @@
                 </div>
               </div>
               <!-- /.tab-pane -->
-
+              @if($detail->is_room =='1')
               <div class="tab-pane" id="ruangan">
                 <div class="table-responsive">
                   <button class="btn btn-primary btn-sm"  style="margin-bottom: 10px;" data-toggle="modal" data-target="#tambahRuangan"><i class="fa fa-plus"></i> Tambah Ruangan</button>
@@ -207,6 +221,51 @@
                 </div>
               </div>
               <!-- /.tab-pane -->
+              @endif
+
+              @if($detail->is_area == '1')
+              <div class="tab-pane" id="area">
+                <div class="table-responsive">
+                 <!--  <button class="btn btn-primary btn-sm"  style="margin-bottom: 10px;" data-toggle="modal" data-target="#tambahRuangan"><i class="fa fa-plus"></i> Tambah Ruangan</button>
+                  <table class="table project-table">
+                    <thead>
+                      <tr>
+                        <th>Nama Ruangan</th>
+                        <th>Kapasitas</th>
+                        <th>Leader</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table> -->
+                  <h2 class="text-center">Under construction</h2>
+                </div>
+              </div>
+              @endif
+              <!-- /.tab-pane -->
+              @if($detail->is_table == '1')
+              <div class="tab-pane" id="meja">
+                <div class="table-responsive">
+                  <button class="btn btn-primary btn-sm"  style="margin-bottom: 10px;" data-toggle="modal" data-target="#tambahRuangan"><i class="fa fa-plus"></i> Tambah Ruangan</button>
+                  <table class="table project-table">
+                    <thead>
+                      <tr>
+                        <th>Nama Ruangan</th>
+                        <th>Kapasitas</th>
+                        <th>Leader</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              @endif
 
               <div class="tab-pane" id="fasilitas">
                 <div class="table-responsive">
@@ -262,16 +321,6 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 control-label text-right">Jenis venue</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="venue_kind" required="required">
-                          @foreach($venueKind as $jenisVenue)
-                          <option value="{{$jenisVenue->name}}" <?php if($jenisVenue->name == $detail->venue_kind)echo "selected='selected'";?>>{{$jenisVenue->name}}</option>
-                          @endforeach
-                        </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
                     <label class="col-sm-2 control-label text-right">Tipe venue</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="venue_type" required="required">
@@ -283,15 +332,34 @@
                     </div>
                   </div>
                   <div class="form-group row">
+                  </div>
+                  <div class="form-group row">
                     <label class="col-sm-2 control-label text-right">Jenis penyewaan venue</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="room" required>
-                          <option value="" disabled="disabled" selected="selected"> --- </option>
-                          <option value="1" <?php if($detail->room == '1')echo "selected";?>>Venue</option>
-                          <option value="2" <?php if($detail->room == '2')echo "selected";?>>Ruangan</option>
-                          <option value="3" <?php if($detail->room == '3')echo "selected";?>>Meja </option>
-                          <option value="4" <?php if($detail->room == '4')echo "selected";?>>Ruangan dan Meja</option>
-                        </select>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="is_venue" <?php if($detail->is_venue == '1')echo "checked";?>>
+                          Venue
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="is_room" <?php if($detail->is_room == '1')echo "checked";?>>
+                          Ruangan
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="is_meja" <?php if($detail->is_meja == '1')echo "checked";?>>
+                          Meja
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="is_area" <?php if($detail->is_area == '1')echo "checked";?>>
+                          Area
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -385,10 +453,10 @@
                   <div class="form-group row">
                     <label class="col-sm-2 control-label text-right">Koordinat</label>
                     <div class="col-sm-5">
-                        <input type="text" name="lat" value="{{$detail->lat}}" class="form-control" placeholder="Latitude">
+                        <input type="text" name="lat" value="{{$detail->latitude}}" class="form-control" placeholder="Latitude">
                     </div>
                     <div class="col-sm-5">
-                        <input type="text" name="lon" value="{{$detail->lon}}" class="form-control" placeholder="Longitude">
+                        <input type="text" name="lon" value="{{$detail->Longitude}}" class="form-control" placeholder="Longitude">
                     </div>
                   </div>
                 </form>                
@@ -407,8 +475,131 @@
     <!-- /.content -->
   </div>
 
+<!-- Modal -->
+<div class="modal fade" id="tambahPaket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tambah Paket Baru</h4>
+        </div>
+        <form method="post" action="{{url('sandwich/venue/paket/tambah')}}">
+          {{csrf_field()}}
+          <input type="hidden" name="id_venue" value="{{base64_encode(base64_encode(strval($detail->id_venue)))}}">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Paket</label>
+              <select class="form-control" name="paket">
+                <option value="0"> Paket Utama </option>
+                @foreach($paket as $pakets)
+                <option value="{{$pakets->id_package}}">{{$pakets->name}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Nama Paket</label>
+              <input class="form-control" name="nama" placeholder="Masukkan Nama Venue.." type="text" required>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>Start:</label>
 
+                  <div class="input-group date">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="date" class="form-control pull-right" name="date_start" required>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <div class="col-sm-6">
+                  <label>End:</label>
 
+                  <div class="input-group date">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="date" class="form-control pull-right" name="date_end" required>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <label>Durasi</label>
+              <div class="row">
+                <div class="col-sm-4">
+                  <input class="form-control" name="durasi_waktu" type="number" placeholder="Masukkan Nomor telpon kantor.." type="text" required>
+                </div>
+                <div class="col-sm-4">
+                  <select class="form-control" name="durasi_satuan" required>
+                    <option value="" disabled="" selected=""> --- </option>
+                    <option value="jam"> -/Jam </option>
+                    <option value="hari"> -/Hari </option>
+                    <option value="minggu"> -/Minggu </option>
+                    <option value="bulan"> -/Bulan </option>
+                    <option value="tahun"> -/Tahun </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Harga</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <input class="form-control" name="harga" type="number" placeholder="Masukkan Nomor telpon kantor.." type="text" required>
+                </div>
+                <div class="col-sm-3">
+                  <input class="form-control" name="harga_satuan" type="text" placeholder="Satuan Harga" type="text" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Down Payment</label>
+              <input class="form-control" name="dp" placeholder="Masukkan Nama Venue.." type="number">
+              <span>*Isi jika menggunakan pembayaran dp</span>
+            </div>
+
+            <div class="form-group">
+              <label>Deskripsi</label>
+               <textarea class="textarea" placeholder="Place some text here" name="deskripsi" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Tambahkan</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="hapusPaket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Hapus Paket</h4>
+          </div>
+          <div class="modal-body" style="text-align: ">
+            <h4>Ingin menghapus paket ?</h4>
+            <p>Data tidak dapat dikembalikan !</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <a href="" class="btn btn-danger" id="tombolHapusPaket">Hapus</a>
+          </div>
+      </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function setHapusPaket(id){
+        $('#tombolHapusPaket').attr("href", "{{url('sandwich/venue/paket/hapus.')}}"+id);
+    }
+</script>
 
 <!-- Modal -->
 <div class="modal fade" id="tambahRuangan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -416,11 +607,11 @@
       <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Daftarkan Venue Baru</h4>
+          <h4 class="modal-title" id="myModalLabel">Tambah Ruangan</h4>
           </div>
           <form method="post" action="{{url('sandwich/venue/ruangan/tambah')}}">
             {{csrf_field()}}
-            <input type="hidden" name="id_venue" value="{{base64_encode(base64_encode($detail->id_venue))}}">
+            <input type="hidden" name="id_venue" value="{{base64_encode(base64_encode(strval($detail->id_venue)))}}">
             <div class="modal-body">
               <div class="form-group">
                 <label>Tipe Ruangan</label>
@@ -467,7 +658,7 @@
           </div>
           <form method="post" action="{{url('sandwich/venue/gallery/tambah')}}" enctype="multipart/form-data">
             {{csrf_field()}}
-            <input type="hidden" name="id_venue" value="{{base64_encode(base64_encode($detail->id_venue))}}">
+            <input type="hidden" name="id_venue" value="{{base64_encode(base64_encode(strval($detail->id_venue)))}}">
             <div class="modal-body">
               <div class="form-group">
                 <label>Gambar</label>
@@ -578,189 +769,8 @@
         $('#tombolHapusFasilitas').attr("href", "{{url('sandwich/venue/fasilitas/hapus.')}}"+$id);
     }
 </script>
-<div class="modal fade bd-example-modal-lg" id="pengaturan" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Hapus Fasilitas</h4>
-          </div>
-          <form action="{{url('sandwich/venue/pengaturan')}}" method="post">
-          {{csrf_field()}}
-          <input type="hidden" name="id_venue" value="{{base64_encode(base64_encode($detail->id_venue))}}">
-          <div class="modal-body">
-            <div class="custom-tabs-line tabs-line-bottom left-aligned">
-          <ul class="nav" role="tablist">
-            <li class="active"><a href="#pengaturan1" role="tab" data-toggle="tab">Ruangan</a></li>
-            <li><a href="#pengaturan2" role="tab" data-toggle="tab">Kontak</a></li>
-            <li><a href="#pengaturan3" role="tab" data-toggle="tab">Lokasi</a></li>
-          </ul>
-        </div>
-        <!-- RUANGAN -->
-        <div class="tab-content">
-          <div class="tab-pane fade in active" id="pengaturan1">
-            <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Nama venue</label>
-                <div class="col-sm-10">
-                    <input type="text" name="venue_name" class="form-control" placeholder="Nama Venue" value="{{$detail->venue_name}}" required="required">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Jenis venue</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="venue_kind" required="required">
-                      @foreach($venueKind as $jenisVenue)
-                      <option value="{{$jenisVenue->name}}" <?php if($jenisVenue->name == $detail->venue_kind)echo "selected='selected'";?>>{{$jenisVenue->name}}</option>
-                      @endforeach
-                    </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Tipe venue</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="venue_type" required="required">
-                      <option value="" disabled selected> --- </option>
-                      @foreach($venueType as $tipeVenue)
-                      <option value="{{$tipeVenue->name}}" <?php if($tipeVenue->name == $detail->venue_type)echo "selected='selected'"?>> {{$tipeVenue->name}} </option>
-                      @endforeach
-                    </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Jenis penyewaan venue</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="room" required>
-                      <option value="" disabled="disabled" selected="selected"> --- </option>
-                      <option value="1" <?php if($detail->room == '1')echo "selected";?>>Venue</option>
-                      <option value="2" <?php if($detail->room == '2')echo "selected";?>>Ruangan</option>
-                      <option value="3" <?php if($detail->room == '3')echo "selected";?>>Meja </option>
-                      <option value="4" <?php if($detail->room == '4')echo "selected";?>>Ruangan dan Meja</option>
-                    </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Kerja sama venue</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="cooperate" required>
-                      <option value="0" <?php if($detail->cooperate == '0')echo "selected";?>>Belum bekerja sama</option>
-                      <option value="1" <?php if($detail->cooperate == '1')echo "selected";?>>Telah bekerja sama</option>
-                    </select>
-                </div>
-              </div>
-          </div>
-          <div class="tab-pane fade" id="pengaturan2">
-            
-            <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Nama Kontak</label>
-                <div class="col-sm-10">
-                    <input type="text" name="contact_name" class="form-control" value="{{$detail->contact_name}}" placeholder="Nama Kontak">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">No.HP Kontak</label>
-                <div class="col-sm-10">
-                    <input type="text" name="contact_number" class="form-control" value="{{$detail->contact_number}}" placeholder="No.Handphone Kontak">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Email Kontak</label>
-                <div class="col-sm-10">
-                    <input type="email" name="contact_email" class="form-control" value="{{$detail->contact_email}}" placeholder="Email Kontak">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Nomor Telpon Kantor</label>
-                <div class="col-sm-10">
-                    <input type="text" name="official_number" class="form-control" value="{{$detail->official_number}}" placeholder="Nomor Telpon Kantor">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Email Kantor</label>
-                <div class="col-sm-10">
-                    <input type="email" name="official_email" class="form-control" value="{{$detail->official_email}}" placeholder="Email Kantor">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Website</label>
-                <div class="col-sm-10">
-                    <input type="text" name="website" class="form-control" value="{{$detail->website}}" placeholder="Website">
-                </div>
-              </div>
-          </div>
-          <div class="tab-pane fade" id="pengaturan3">
-            
-            <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Alamat</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="address" value="{{$detail->address}}"  placeholder="Nama Venue" required="required">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Provinsi</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="province" required="required">
-                      <option value="" disabled="disabled" selected="selected"> --- </option>
-                      @foreach($areaProvince as $provinsi)
-                      <option value="{{$provinsi->id}}" <?php if($provinsi->id == $detail->province)echo "selected='selected'";?>>{{ucwords(strtolower($provinsi->name))}}</option>
-                      @endforeach
-                    </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Kabupaten/Kota</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="city" required="required">
-                      <option value="" disabled="disabled" selected="selected"> --- </option>
-                      @foreach($areaCity as $kota)
-                      <option value="{{$kota->id}}" <?php if($kota->id == $detail->city)echo "selected='selected'";?>>{{ucwords(strtolower($kota->name))}}</option>
-                      @endforeach
-                    </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 control-label text-right">Kecamatan</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="district" required="required">
-                      <option value="" disabled="disabled" selected="selected"> --- </option>
-                      @foreach($areaDistrict as $kecamatan)
-                      <option value="{{$kecamatan->id}}" <?php if($kecamatan->id == $detail->district)echo "selected='selected'";?>>{{ucwords(strtolower($kecamatan->name))}}</option>
-                      @endforeach
-                    </select>
-                </div>
-              </div>
-              <div class="row form-group">
-                <label class="col-sm-2 control-label text-right">Koordinat</label>
-                <div id="mapinput" class="col-sm-8"></div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-5">
-                    <input type="text" name="area_lat" value="{{$detail->lat}}" class="form-control" placeholder="Latitude">
-                </div>
-                <div class="col-sm-5">
-                    <input type="text" name="area_lng" value="{{$detail->lon}}" class="form-control" placeholder="Longitude">
-                </div>
-              </div>
-          </div>
-        </div>
-          
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger">Simpan</a>
-          </div>
-          </form>
-      </div>
-    </div>
-</div>
+
 <script type="text/javascript">
-  $("select[name=venue_kind]").change(function() {
-      $.get("{{url('api/v1/venue/getvenuetype')}}/"+$(this).val(), function(data, status){
-          $("select[name=venue_type]").html('');
-          $.each(data, function(index, hasil) {
-            $("select[name=venue_type]").append('<option value="'+hasil.name+'">'+hasil.name+'</option>');
-      });
-      });
-  });
   $("select[name=province]").change(function() {
       $.get("{{url('api/v1/area/getcitybyprovince')}}/"+$(this).val(), function(data, status){
           $("select[name=city]").html('<option value="" disabled="disabled" selected="selected"> --- </option>');
@@ -799,8 +809,19 @@
         });
    
       }
-    </script>
+</script>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoq04fAVg-LNmUp4jisrlUBtCphBA5l6c&callback=initMap">
+</script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="{{asset('assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    // CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
 </script>
 @endsection

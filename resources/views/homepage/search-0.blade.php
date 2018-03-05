@@ -271,16 +271,15 @@
           $.each(dataVenue.response, function (index, itemData) {
 
             $('#listDataVenue').append('<div class="col-lg-4 col-md-4 px-1 mb-2">'+
-                '<a href="'+itemData.url_venue+'">'+
                 '<div class="card">'+
                   '<img class="card-img-top" src="'+itemData.image_profil+'" onerror="imgError(this);" alt="Card image cap">'+
                   '<div class="card-body">'+
-                    '<h6 class="card-subtitle text-primary">'+itemData.name+'</h6>'+
-                    '<h5 class="card-title">'+itemData.venue_name+'</h5>'+
+                    '<label>'+itemData.name+'</label>'+
+                    '<h6>'+itemData.venue_name+'</h6>'+
+                    '<p>'+itemData.description+'</p>'+
                   '</div>'+
                 '</div>'+
-              '</a>'+
-              '</div>');    
+              '</div>');  
           });
         }//batas setDataVenue
 

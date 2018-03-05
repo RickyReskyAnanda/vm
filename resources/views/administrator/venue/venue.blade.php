@@ -24,6 +24,7 @@
         </div>
       </div>
       <div class="box-body">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#tambahVenue"><i class="fa fa-plus"></i> Tambah Venue</button>
         <table id="tabel1" class="table table-bordered table-striped">
           <thead>
           <tr>
@@ -60,5 +61,50 @@
     <!-- /.box -->
   </section>
   <!-- /.content -->
+</div>
+<!-- Modal -->
+<div class="modal fade" id="tambahVenue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Daftarkan Venue Baru</h4>
+        </div>
+        <form method="post" action="{{url('sandwich/venue/tambah')}}">
+          {{csrf_field()}}
+          <div class="modal-body">
+            <div class="alert alert-warning">(*) Boleh Kosong. Namun Sebaiknya Di isi</div>
+            <div class="form-group">
+              <label>Nama Venue</label>
+              <input class="form-control" name="nama" placeholder="Masukkan Nama Venue.." type="text" required>
+            </div>
+            <div class="form-group">
+              <label>Kontak*</label>
+              <input class="form-control" name="kontak" placeholder="Masukkan Kontak yang dapat dihubungi.." type="text">
+            </div>
+            <div class="form-group">
+              <label>Nomor Telpon Kantor*</label>
+              <input class="form-control" name="nomor_kantor" placeholder="Masukkan Nomor telpon kantor.." type="text">
+            </div>
+            <div class="form-group">
+              <label>Email Kantor*</label>
+              <input class="form-control" name="email_kantor" placeholder="Masukkan email kantor.." type="email">
+            </div>
+            <div class="form-group">
+              <label>Alamat</label>
+              <input class="form-control" name="alamat" placeholder="Masukkan Alamat Venue.." type="text" required>
+            </div>
+            <div class="form-group">
+              <label>Informasi</label>
+              <textarea class="form-control" name="informasi" placeholder="Masukkan Informasi Penting.."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Tambahkan</button>
+          </div>
+        </form>
+    </div>
+  </div>
 </div>
 @endsection

@@ -18,9 +18,7 @@ class RoomModel extends Model
     public function getSlider(){
         return $this->hasMany('App\Model\Room\RoomGalleryModel','id_room','id_room')->where('sts','1');
     }
-    public function getPrice(){
-    	return $this->hasMany('App\Model\Room\RoomPriceModel','id_room','id_room');
-    }
+   
     public function getFacility(){
     	return $this->hasMany('App\Model\Room\RoomFacilityModel','id_room','id_room');
     }

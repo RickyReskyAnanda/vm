@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Model\Room\RoomModel;
 use App\Model\Room\RoomGalleryModel;
 use App\Model\Room\RoomPackageModel;
-use App\Model\Room\RoomPriceModel;
 use App\Model\Room\RoomFacilityModel;
+use App\Model\Room\RoomTypeModel;
 use App\Model\Venue\VenueModel;
 use App\Model\Venue\VenueGalleryModel;
 use File;
@@ -17,13 +17,14 @@ class RoomController extends Controller
 {
     public function viewDetailRuangan($id){
     	$id = base64_decode(base64_decode($id));
-    	
-    	$ruangan = RoomModel::find($id);
+    	$roomType = RoomTypeModel::all();
+        
+        $ruangan = RoomModel::find($id);
     	$venue = VenueModel::find($ruangan->id_venue);
         $gambarVenueProfil = VenueGalleryModel::where('id_venue',$ruangan->id_venue)->where('profil','1')->first();
     	$gambarProfil = RoomGalleryModel::where('id_room',$ruangan->id_room)->where('profil','1')->first();
     	
-    	return view('administrator.venue.detail-ruangan',compact('ruangan','venue','gambarProfil','gambarVenueProfil'));
+    	return view('administrator.venue.detail-ruangan',compact('ruangan','venue','gambarProfil','gambarVenueProfil','roomType'));
     }
 
     public function postTambahRuangan(Request $request){
@@ -48,36 +49,6 @@ class RoomController extends Controller
     	$ruangan->is_published = 0;
     	$ruangan->is_verified = 1;
     	$ruangan->save();
-
-
-        $huruf = 'A';
-
-        $namaHarga[0] = 'Perjam';
-        $namaHarga[1] = 'Halfday';
-        $namaHarga[2] = 'Fullday';
-        $namaHarga[3] = 'Fullboard';
-        $namaHarga[4] = 'Perminggu';
-        $namaHarga[5] = 'Perbulan';
-        $namaHarga[6] = 'Pertahun';
-
-        $satuan[0] = 'Jam';
-        $satuan[1] = '4 Jam';
-        $satuan[2] = '8 Jam';
-        $satuan[3] = '12 Jam';
-        $satuan[4] = 'Minggu';
-        $satuan[5] = 'Bulan';
-        $satuan[6] = 'Tahun';
-
-        for ($i=0; $i < 7; $i++) { 
-            $price = new RoomPriceModel;
-            $price->id_room = $ruangan->id_room;
-            $price->room_price_code = $huruf++;
-            $price->time_name =  $namaHarga[$i];
-            $price->satuan = $satuan[$i];
-            $price->price = 0;
-            $price->sts = "0";
-            $price->save();
-        }
 
     	return redirect('sandwich/venue/ruangan/detail.'.base64_encode(base64_encode($ruangan->id_room)))->with('pesan','Data Ruangan Telah Ditambahkan');
     }
@@ -135,52 +106,6 @@ class RoomController extends Controller
         $data->save();
 
         return redirect()->back()->with('pesan','Data Paket telah diperbaharui !');
-    }
-
-    /*harga-harga*/
-    public function postEditHargaRuangan(Request $request){
-        $this->validate($request,[
-            'id_ruangan'    => 'required',
-            'A'          => 'nullable|numeric',
-            'B'          => 'nullable|numeric',
-            'C'          => 'nullable|numeric',
-            'D'          => 'nullable|numeric',
-            'E'          => 'nullable|numeric',
-            'F'          => 'nullable|numeric',
-            'G'          => 'nullable|numeric',
-        ]);
-        $idRoom = base64_decode(base64_decode($request->id_ruangan));
-
-        $kode = 'A';
-        $harga[0] = $request->A;
-        $harga[1] = $request->B;
-        $harga[2] = $request->C;
-        $harga[3] = $request->D;
-        $harga[4] = $request->E;
-        $harga[5] = $request->F;
-        $harga[6] = $request->G;
-
-        for ($i=0; $i < 7; $i++) { 
-            $data = RoomPriceModel::where('id_room',$idRoom)->where('room_price_code',$kode++)->first();
-            $data->price = $harga[$i];
-            $data->save();
-        }
-
-        return redirect()->back()->with('pesan','Data Harga telah diperbaharui !');
-
-    }
-    public function postShowHideHargaRuangan($id){
-        $idPrice = base64_decode(base64_decode($id));
-
-        $data = RoomPriceModel::find($idPrice);
-        if($data->sts == '1')
-            $data->sts = '0';
-        else 
-            $data->sts = '1';
-
-        $data->save();
-
-        return redirect()->back()->with('pesan','Data Harga telah diperbaharui !');
     }
 
     /*Galery*/
@@ -319,4 +244,40 @@ class RoomController extends Controller
             }
             return redirect()->back()->with('pesan','Data penggunaan ruangan tidak memiliki perubahan');
         }
+
+    public function postEditPengaturanRuangan(Request $request){
+        $this->validate($request,[
+            'id_room' => 'required',
+            'id_venue' => 'required',
+            'name' => 'required',
+            'room_code' => 'nullable',
+            'room_type' => 'required',
+            'capacity' => 'nullable|numeric',
+            'room_ceiling' => 'nullable|numeric',
+            'room_long' => 'nullable|numeric',
+            'room_width' => 'nullable|numeric',
+            'room_notable' => 'nullable',
+            'description' => 'nullable',
+            'sts' => 'required|numeric',
+            'tag' => 'nullable',
+        ]);
+
+        $id_room = base64_decode(base64_decode($request->id_room));
+        $id_venue = base64_decode(base64_decode($request->id_venue));
+        $data = RoomModel::where('id_room',$id_room)->where('id_venue',$id_venue)->first();
+        $data->name = $request->name;
+        $data->room_code = $request->room_code;
+        $data->room_type = $request->room_type;
+        $data->capacity = $request->capacity;
+        $data->room_ceiling = $request->room_ceiling;
+        $data->room_long = $request->room_long;
+        $data->room_width = $request->room_width;
+        $data->room_notable = $request->room_notable;
+        $data->description = $request->description;
+        $data->sts = $request->sts;
+        $data->tag = $request->tag;
+        $data->save();
+
+        return redirect()->back()->with('pesan','Data Pengaturan telah disimpan!');
+    }
 }

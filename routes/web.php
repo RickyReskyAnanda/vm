@@ -58,6 +58,11 @@ Route::group(['middleware' => ['access-log']], function () {
 		Route::get('sandwich/venue/gallery/show-hide.{id}','Administrator\VenueController@postShowHideGalleryVenue');
 		Route::get('sandwich/venue/gallery/hapus.{id}','Administrator\VenueController@postHapusGalleryVenue');
 
+		Route::post('sandwich/venue/paket/tambah','Administrator\VenueController@postTambahPaketVenue');
+		Route::post('sandwich/venue/paket/select-profil','Administrator\VenueController@postSelectPaketVenue');
+		Route::get('sandwich/venue/paket/show-hide.{id}','Administrator\VenueController@postShowHidePaketVenue');
+		Route::get('sandwich/venue/paket/hapus.{id}','Administrator\VenueController@postHapusPaketVenue');
+
 		Route::post('sandwich/venue/operational/edit','Administrator\VenueController@postEditOperationalVenue');
 
 		Route::post('sandwich/venue/fasilitas/tambah','Administrator\VenueController@postTambahFasilitasVenue');
@@ -87,6 +92,7 @@ Route::group(['middleware' => ['access-log']], function () {
 		Route::get('sandwich/venue/ruangan/fasilitas/hapus.{id}','Administrator\RoomController@postHapusFasilitasRuangan');
 		/*penggunaan ruangan*/
 		Route::post('sandwich/venue/ruangan/penggunaan-ruangan','Administrator\RoomController@postEditPenggunaanRuangan');
+		Route::post('sandwich/venue/ruangan/pengaturan','Administrator\RoomController@postEditPengaturanRuangan');
 
 	Route::get('sandwich/master-data/jenis-venue','Administrator\Master\VenueKindController@viewJenisVenue');
 	Route::get('sandwich/master-data/jenis-venue/status_{id}','Administrator\Master\VenueKindController@postStatusJenisVenue');

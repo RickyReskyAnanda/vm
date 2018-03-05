@@ -37,7 +37,7 @@ class DetailVenueController extends Controller
                 $detail->venue_terdekat[$i]->name = $detail->venue_terdekat[$i]->venue_name;
                 $detail->venue_terdekat[$i]->type = ucfirst($detail->venue_terdekat[$i]->venue_type);
                 $detail->venue_terdekat[$i]->lokasi = ucwords(strtolower($detail->venue_terdekat[$i]->getKecamatan->name.', '.$detail->venue_terdekat[$i]->getKota->name.', '.$detail->venue_terdekat[$i]->getProvinsi->name));
-                $detail->venue_terdekat[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($detail->venue_terdekat[$i]->type)).'/'.str_replace(' ', '-',strtolower($detail->venue_terdekat[$i]->name)).'.'.base64_encode(base64_encode($detail->venue_terdekat[$i]->id_venue))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
+                $detail->venue_terdekat[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($detail->venue_terdekat[$i]->type)).'/'.str_replace(' ', '-',strtolower($detail->venue_terdekat[$i]->name)).'_'.base64_encode(base64_encode(strval($detail->venue_terdekat[$i]->id_venue)))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
             }
 
             // $detail->breadcump = VenueModel::where('venue_type',$venueType)->where('district',$detail->district)->get();
@@ -50,11 +50,10 @@ class DetailVenueController extends Controller
 
             //looping untuk set link menu venue terdekat
             for ($i=0; $i < count($detail->room_venue); $i++) { 
-                $detail->room_venue[$i]->name = $detail->room_venue[$i]->venue_name;
-                $detail->room_venue[$i]->type = ucfirst($detail->room_venue[$i]->venue_type);
+                $detail->room_venue[$i]->type = ucfirst($detail->room_venue[$i]->room_type);
 
                 $detail->room_venue[$i]->lokasi = ucwords(strtolower($detail->room_venue[$i]->getVenue->getKecamatan->name.', '.$detail->room_venue[$i]->getVenue->getKota->name.', '.$detail->room_venue[$i]->getVenue->getProvinsi->name));
-                $detail->room_venue[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($detail->room_venue[$i]->type)).'/'.str_replace(' ', '-',strtolower($detail->room_venue[$i]->name)).'.'.base64_encode(base64_encode($detail->room_venue[$i]->id_venue))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
+                $detail->room_venue[$i]->url_venue = url('venue/'.str_replace(' ', '-',strtolower($detail->room_venue[$i]->type)).'/'.str_replace(' ', '-',strtolower($detail->room_venue[$i]->name)).'_'.base64_encode(base64_encode(strval($detail->room_venue[$i]->id_room)))).'?lokasi='.str_replace(' ', '+',$request->lokasi).'&tipe='.str_replace(' ', '+',$request->tipe);
             }
         }
         

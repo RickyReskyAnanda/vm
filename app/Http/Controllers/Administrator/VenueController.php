@@ -27,7 +27,7 @@ class VenueController extends Controller
    		$id = base64_decode(base64_decode($id));
    		$detail = VenueModel::find($id);
          
-   		$tipeRuangan = RoomTypeModel::where('venue_type',$detail->venue_type)->where('venue_kind',$detail->venue_kind)->where('show','1')->get();
+   		$tipeRuangan = RoomTypeModel::where('sts','1')->get();
          $gambarProfil = VenueGalleryModel::where('id_venue',$detail->id_venue)->where('profil','1')->first();
 
          $hari[0] = 'Minggu';
@@ -44,7 +44,7 @@ class VenueController extends Controller
          $areaCity = AreaRegencyModel::where('province_id',$detail->province)->get();
          $areaDistrict = AreaDistrictModel::where('regency_id',$detail->city)->get();
 
-   		return view('administrator.venue.detail-venue',compact('detail','tipeRuangan','gambarProfil','hari','venueKind','venueType','areaProvince','areaCity','areaDistrict'));
+   		return view('administrator.venue.detail-venue-1',compact('detail','tipeRuangan','gambarProfil','hari','venueKind','venueType','areaProvince','areaCity','areaDistrict'));
    	}
    		public function postTambahVenue(Request $request){
             // $text = simple_fields_value('textareaExample');

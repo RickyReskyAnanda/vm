@@ -3,13 +3,6 @@
 
   <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Reservasi dan Booking venue mudah, cepat secara online">
-    <meta name="author" content="ceklokasi.id">
-
-    <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
-
     @include('homepage.library.header')
    
     <style>
@@ -141,7 +134,7 @@
             <div class="card mb-3">
               <div class="card-body">
                 <div class="row">
-                  @if(count($detail->getFacilityShow)>0 && count($detail->venue_usage)>0)
+                  @if(count($detail->getFacilityShow)>0 || count($detail->venue_usage)>0)
                   <div class="col">
                     @if(count($detail->getFacilityShow)>0)
                     <div class="row mb-4">

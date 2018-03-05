@@ -364,8 +364,8 @@
 </div>
 <!-- script paket -->
 <script type="text/javascript">
-    function setHapusPaket($id){
-        $('#tombolHapusPaket').attr("href", "{{url('sandwich/venue/ruangan/paket/hapus.')}}"+$id);
+    function setHapusPaket(id){
+        $('#tombolHapusPaket').attr("href", "{{url('sandwich/venue/ruangan/paket/hapus.')}}"+id);
     }
 </script>
 
@@ -419,8 +419,8 @@
 </div>
 
 <script type="text/javascript">
-    function setHapusGaleri($id){
-        $('#tombolHapusGaleri').attr("href", "{{url('sandwich/venue/ruangan/gallery/hapus.')}}"+$id);
+    function setHapusGaleri(id){
+        $('#tombolHapusGaleri').attr("href", "{{url('sandwich/venue/ruangan/gallery/hapus.')}}"+id);
     }
 </script>
 
@@ -487,8 +487,8 @@
 </div>
 
 <script type="text/javascript">
-    function setHapusFasilitas($id){
-        $('#tombolHapusFasilitas').attr("href", "{{url('sandwich/venue/ruangan/fasilitas/hapus.')}}"+$id);
+    function setHapusFasilitas(id){
+        $('#tombolHapusFasilitas').attr("href", "{{url('sandwich/venue/ruangan/fasilitas/hapus.')}}"+id);
     }
 </script>
 @endsection

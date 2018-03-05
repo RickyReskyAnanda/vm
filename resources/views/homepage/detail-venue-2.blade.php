@@ -3,13 +3,6 @@
 
   <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Reservasi dan Booking venue mudah, cepat secara online">
-    <meta name="author" content="ceklokasi.id">
-
-    <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
-
     @include('homepage.library.header')
    
     <style>
@@ -115,7 +108,7 @@
                 <h5 class="card-subtitle fw-7 mx-0 text-info"><?=$detail->name?></h5>
                 <h4 class="card-title fw-7"><?=$detail->getVenue->venue_name?></h4>
                 <p class="card-text"><?=ucwords($detail->room_type)?> di <?=ucwords(strtolower($detail->getVenue->getKota->name))?></p>
-                <p class="card-text"><?=ucfirst($detail->information)?></p>
+                <p class="card-text"><?=ucfirst($detail->description)?></p>
               </div>
             </div><!-- batas card -->
 
@@ -144,7 +137,7 @@
             <div class="card mb-3">
               <div class="card-body">
                 <div class="row">
-                  @if(count($detail->getFacilityShow)>0 && count($detail->venue_usage)>0)
+                  @if(count($detail->getFacilityShow)>0 || count($detail->room_usage)>0)
                   <div class="col">
                     @if(count($detail->getFacilityShow)>0)
                     <div class="row mb-4">
@@ -157,12 +150,12 @@
                     </div>
                     @endif
                     
-                    @if(count($detail->venue_usage)>0)
+                    @if(count($detail->room_usage)>0)
                     <div class="row">
                       <div class="col">
                         <h6 class="card-title fw-7">Kegunaan</h6>
-                        @for($i=0;$i<count($detail->venue_usage);$i++)
-                        <div> {{$detail->venue_usage[$i]}}</div>
+                        @for($i=0;$i<count($detail->room_usage);$i++)
+                        <div> {{ucfirst($detail->room_usage[$i])}}</div>
                         @endfor
                       </div>
                     </div>
@@ -215,16 +208,16 @@
                     <div class="row">
                       <div class="col">
                         <h6 class="card-title fw-7">Alamat</h6>
-                        <div>{{ucfirst($detail->address)}}</div>
+                        <div>{{ucfirst($detail->getVenue->address)}}</div>
                       </div>
                     </div>
                   </div>
-                  @if(isset($detail->more_info))
+                  @if(isset($detail->room_notable))
                   <div class="col">
                     <div class="row">
                       <div class="col">
                         <h6 class="card-title fw-7 text-info">More Info</h6>
-                        <div><?= $detail->more_info?></div>
+                        <div><?= $detail->room_notable?></div>
                       </div>
                     </div>
                   </div>
@@ -297,7 +290,7 @@
                 <hr/>
                 @foreach($detail->getReview as $komentar)
                 <div class="media mb-4">
-                  <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                  <img class="d-flex mr-3" src="{{asset('images/icon/review-user.png')}}" alt="">
                   <div class="media-body">
                     <h5 class="mt-0">{{$komentar->name}}</h5>
                     {{$komentar->komentar}}
@@ -345,26 +338,26 @@
               </div>
             </div>
             <!-- venue terdekat -->
-            @if(count($detail->venue_terdekat)>0)
+            @if(count($detail->room_venue)>0)
             <div class="row">
               <div class="col px-1">
                 <div class="card">
                   <div class="card-body">
                     
-                    <h5 class="card-title fw-7">Venue terdekat</h5> 
+                    <h5 class="card-title fw-7">Venue Lainnya</h5> 
 
                     <div class="list-group list-group-flush">
                       <!-- listnya -->
-                      @foreach($detail->venue_terdekat as $terdekat)
+                      @foreach($detail->room_venue as $terdekat)
                       <div class="list-group-item px-0 py-2">
                         <a href="{{$terdekat->url_venue}}">
                           <div class="row">
                             <div class="col-sm-2">
-                              <img src="https://b.zmtcdn.com/data/pictures/8/16564478/fa9d9a7a73d58f62223fd6635918e3ae_featured_v2.jpg?fit=around%7C40%3A40&crop=40%3A40%3B%2A%2C%2A  "> 
+                              <img src="<?php if(isset($terdekat->getProfil->url))echo $terdekat->getProfil->url;?>" width="50px"> 
                             </div>
                             <div class="col-sm-10">
-                              <h6 class="m-0"><b>{{ucfirst($terdekat->venue_name)}}</b></h6>
-                              <small>{{ucfirst($terdekat->venue_type)}}</small>
+                              <h6 class="m-0"><b>{{ucfirst($terdekat->name)}}</b></h6>
+                              <small>{{ucfirst($terdekat->room_type)}}</small>
                             </div>
                           </div>
                         </a>
@@ -452,8 +445,8 @@
         <div class="modal-content">
           <div class="modal-body text-center" id="modalCallBody">
             <h5 class="fw-7">Nomor Telpon :</h5>
-            <h6 class="fw-7 text-danger">{{$detail->official_number}}</h6>
-            <h6 class="fw-7 text-danger">{{$detail->contact_number}}</h6>
+            <h6 class="fw-7 text-danger">{{$detail->getVenue->official_number}}</h6>
+            <h6 class="fw-7 text-danger">{{$detail->getVenue->contact_number}}</h6>
           </div>
           </div>
         </div>

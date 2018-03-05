@@ -1,197 +1,263 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
-	<title>Dashboard | Ceklokasi.id - Temukan Tempat Terbaik Anda</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<!-- VENDOR CSS -->
-	<link rel="stylesheet" href="{{asset('assets/administrator/vendor/bootstrap/css/bootstrap.min.css')}}">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="{{asset('assets/admin/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{asset('assets/admin/bower_components/font-awesome/css/font-awesome.min.css')}}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{{asset('assets/admin/bower_components/Ionicons/css/ionicons.min.css')}}">
 
-	<link rel="stylesheet" href="{{asset('assets/administrator/vendor/font-awesome/css/font-awesome.min.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/administrator/vendor/linearicons/style.css')}}">
-	<!-- MAIN CSS -->
-	<link rel="stylesheet" href="{{asset('assets/administrator/css/main.css')}}">
-	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-	<link rel="stylesheet" href="{{asset('assets/administrator/css/demo.css')}}">
-	<!-- GOOGLE FONTS -->
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
-	<!-- ICONS -->
-	<link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/administrator/img/apple-icon.png')}}">
-	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('assets/administrator/img/favicon.png')}}">
-	<script src="{{asset('assets/administrator/vendor/jquery/jquery.min.js')}}"></script>
-	<style type="text/css">
-		.label{
-			font-size: 100%;
-		}
-	</style>
+  <link rel="stylesheet" href="{{asset('assets/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('assets/admin/dist/css/AdminLTE.min.css')}}">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="{{asset('assets/admin/dist/css/skins/_all-skins.min.css')}}">
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<!-- jQuery 3 -->
+<script src="{{asset('assets/admin/bower_components/jquery/dist/jquery.min.js')}}"></script>
 </head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
 
-<body>
-	<!-- WRAPPER -->
-	<div id="wrapper">
-		<!-- NAVBAR -->
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="brand">
-				<a href="index.html"><img src="{{asset('assets/administrator/img/logo-dark.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
-			</div>
-			<div class="container-fluid">
-				<div class="navbar-btn">
-					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
-				</div>
-				<!-- <form class="navbar-form navbar-left">
-					<div class="input-group">
-						<input type="text" value="" class="form-control" placeholder="Search dashboard...">
-						<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
-					</div>
-				</form> -->
-				<div class="navbar-btn" style="margin-left:30px;">
-					<a class="btn btn-danger" href="javascript:;" data-toggle="modal" data-target="#tambahVenue"><i class="fa fa-plus"></i> <span>TAMBAH VENUE</span></a>
-				</div>
-				<div id="navbar-menu">
-					<ul class="nav navbar-nav navbar-right">
-						<!-- <li class="dropdown">
-							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-								<i class="lnr lnr-alarm"></i>
-								<span class="badge bg-danger">5</span>
-							</a>
-							<ul class="dropdown-menu notifications">
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-								<li><a href="#" class="more">See all notifications</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Basic Use</a></li>
-								<li><a href="#">Working With Data</a></li>
-								<li><a href="#">Security</a></li>
-								<li><a href="#">Troubleshooting</a></li>
-							</ul>
-						</li> -->
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{asset('assets/administrator/img/user.png')}}" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-								<li><a href="{{url('sandwich/logout')}}"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-		<!-- END NAVBAR -->
-		<!-- LEFT SIDEBAR -->
-		<div id="sidebar-nav" class="sidebar">
-			<div class="sidebar-scroll">
-				<nav>
-					<ul class="nav">
-						<li><a href="{{url('sandwich/beranda')}}" class="active"><i class="lnr lnr-home"></i> <span>Beranda</span></a></li>
-						<li><a href="{{url('sandwich/venue')}}" class=""><i class="lnr lnr-code"></i> <span>Venue</span></a></li>
-						<li>
-							<a href="#subPages1" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Master Data</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPages1" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{url('sandwich/master-data/kategori-tempat')}}" class="">Kategori Tempat</a></li>
-									<li><a href="{{url('sandwich/master-data/kategori-kegiatan')}}" class="">Kategori Kegiatan</a></li>
-									<li><a href="{{url('sandwich/master-data/data-lokasi')}}" class="">Data Lokasi</a></li>
-									<li><a href="{{url('sandwich/master-data/user-admin')}}" class="">User Admin</a></li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-		<!-- END LEFT SIDEBAR -->
-		<!-- MAIN -->
-		@yield('content')
-		<!-- Modal -->
-		<div class="modal fade" id="tambahVenue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  	<div class="modal-dialog" role="document">
-		    	<div class="modal-content">
-		      		<div class="modal-header">
-		        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		    			<h4 class="modal-title" id="myModalLabel">Daftarkan Venue Baru</h4>
-			      	</div>
-			      	<form method="post" action="{{url('sandwich/venue/tambah')}}">
-			      		{{csrf_field()}}
-				      	<div class="modal-body">
-				      		<div class="alert alert-warning">(*) Boleh Kosong. Namun Sebaiknya Di isi</div>
-				      		<div class="form-group">
-				      			<label>Jenis Venue</label>
-				      			<select class="form-control" name="jenis" required>
-				      				<option value="" disabled selected> --- </option>
-				      				<option value="sosial">Sosial</option>
-				      				<option value="keluarga">Keluarga</option>
-				      				<option value="bisnis">Bisnis</option>
-				      				<option value="perusahaan">Perusahaan</option>
-				      			</select>
-				      		</div>
-				      		<div class="form-group">
-				      			<label>Nama Venue</label>
-				      			<input class="form-control" name="nama" placeholder="Masukkan Nama Venue.." type="text" required>
-				      		</div>
-				      		<div class="form-group">
-				      			<label>Kontak*</label>
-				      			<input class="form-control" name="kontak" placeholder="Masukkan Kontak yang dapat dihubungi.." type="text">
-				      		</div>
-				      		<div class="form-group">
-				      			<label>Nomor Telpon Kantor*</label>
-				      			<input class="form-control" name="nomor_kantor" placeholder="Masukkan Nomor telpon kantor.." type="text">
-				      		</div>
-				      		<div class="form-group">
-				      			<label>Email Kantor*</label>
-				      			<input class="form-control" name="email_kantor" placeholder="Masukkan email kantor.." type="email">
-				      		</div>
-				      		<div class="form-group">
-				      			<label>Alamat</label>
-				      			<input class="form-control" name="alamat" placeholder="Masukkan Alamat Venue.." type="text" required>
-				      		</div>
-				      		<div class="form-group">
-				      			<label>Informasi</label>
-				      			<textarea class="form-control" name="informasi" placeholder="Masukkan Informasi Penting.."></textarea>
-				      		</div>
-				      	</div>
-				      	<div class="modal-footer">
-				        	<button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-				        	<button type="submit" class="btn btn-primary">Tambahkan</button>
-				      	</div>
-			      	</form>
-		    	</div>
-		  	</div>
-		</div>
-		<!-- END MAIN -->
-		<div class="clearfix"></div>
-		<footer>
-			<div class="container-fluid">
-				<p class="copyright">&copy; 2017 <a href="https://www.themeineed.com" target="_blank">Theme I Need</a>. All Rights Reserved.</p>
-			</div>
-		</footer>
-	</div>
-	<!-- END WRAPPER -->
-	<!-- Javascript -->
-	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+  <header class="main-header">
 
-	<script src="{{asset('assets/administrator/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-	<script src="{{asset('assets/administrator/vendor/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-	
-	<script src="{{asset('assets/administrator/scripts/klorofil-common.js')}}"></script>
-	
-	<script type="text/javascript">
-		$(document).ready(function() {
-		    $('#dataTable').DataTable();
-		} );
-	</script>
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>CL</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Admin</b>CL</span>
+    </a>
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+	  <div class="navbar-custom-menu">
+	    <ul class="nav navbar-nav">
+	      <!-- Messages: style can be found in dropdown.less-->
+	      <li class="dropdown messages-menu">
+	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	          <i class="fa fa-envelope-o"></i>
+	          <span class="label label-success">4</span>
+	        </a>
+	        <ul class="dropdown-menu">
+	          <li class="header">You have 4 messages</li>
+	          <li>
+	            <!-- inner menu: contains the actual data -->
+	            <ul class="menu">
+	              <li><!-- start message -->
+	                <a href="#">
+	                  <div class="pull-left">
+	                    <img src="{{asset('assets/admin/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+	                  </div>
+	                  <h4>
+	                    Support Team
+	                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+	                  </h4>
+	                  <p>Why not buy a new awesome theme?</p>
+	                </a>
+	              </li>
+	              <!-- end message -->
+	              <li>
+	                <a href="#">
+	                  <div class="pull-left">
+	                    <img src="{{asset('assets/admin/dist/img/user3-128x128.jpg')}}" class="img-circle" alt="User Image">
+	                  </div>
+	                  <h4>
+	                    AdminLTE Design Team
+	                    <small><i class="fa fa-clock-o"></i> 2 hours</small>
+	                  </h4>
+	                  <p>Why not buy a new awesome theme?</p>
+	                </a>
+	              </li>
+	              
+	            </ul>
+	          </li>
+	          <li class="footer"><a href="#">See All Messages</a></li>
+	        </ul>
+	      </li>
+	      <!-- Notifications: style can be found in dropdown.less -->
+	      <li class="dropdown notifications-menu">
+	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	          <i class="fa fa-bell-o"></i>
+	          <span class="label label-warning">10</span>
+	        </a>
+	        <ul class="dropdown-menu">
+	          <li class="header">You have 10 notifications</li>
+	          <li>
+	            <!-- inner menu: contains the actual data -->
+	            <ul class="menu">
+	              <li>
+	                <a href="#">
+	                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
+	                </a>
+	              </li>
+	              <li>
+	                <a href="#">
+	                  <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+	                  page and may cause design problems
+	                </a>
+	              </li>
+	              <li>
+	                <a href="#">
+	                  <i class="fa fa-users text-red"></i> 5 new members joined
+	                </a>
+	              </li>
+	              <li>
+	                <a href="#">
+	                  <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+	                </a>
+	              </li>
+	              <li>
+	                <a href="#">
+	                  <i class="fa fa-user text-red"></i> You changed your username
+	                </a>
+	              </li>
+	            </ul>
+	          </li>
+	          <li class="footer"><a href="#">View all</a></li>
+	        </ul>
+	      </li>
+	      <!-- User Account: style can be found in dropdown.less -->
+	      <li class="user user-menu">
+	        <a href="{{url('sandwich/logout')}}">
+	          <span class="hidden-xs"><i class="fa fa-sign-out"></i> Keluar</span>
+	        </a>
+	      </li>
+	    </ul>
+	  </div>
+
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel" style="padding-bottom: 50px;">
+        <div class="pull-left info" style="left: 0;">
+          <p>{{ucwords(Auth::guard('admin')->user()->name)}}</p>
+          <span><i class="fa fa-circle text-success"></i> Online</span>
+        </div>
+      </div>
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li><a href="{{url('sandwich/beranda')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="{{url('sandwich/venue')}}"><i class="fa fa-map-marker"></i> <span>Venue</span></a></li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-pie-chart"></i>
+            <span>Data Master</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{url('sandwich/master-data/tipe-venue')}}"><i class="fa fa-circle-o"></i> Tipe Venue</a></li>
+            <li><a href="{{url('sandwich/master-data/tipe-ruangan')}}"><i class="fa fa-circle-o"></i> Tipe Ruangan</a></li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-circle-o"></i> Lokasi
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{url('sandwich/master-data/lokasi/kecamatan')}}"><i class="fa fa-circle-o"></i> Kecamatan</a></li>
+                <li><a href="{{url('sandwich/master-data/lokasi/kabupaten-kota')}}"><i class="fa fa-circle-o"></i> Kabupaten/Kota</a></li>
+                <li><a href="{{url('sandwich/master-data/lokasi/provinsi')}}"><i class="fa fa-circle-o"></i> Provinsi</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-circle-o"></i> Homepage
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{url('sandwich/master-data/home-type')}}"><i class="fa fa-circle-o"></i> Tipe Venue</a></li>
+                <li><a href="{{url('sandwich/master-data/homepage/kabupaten-kota')}}"><i class="fa fa-circle-o"></i> Kabupaten/Kota</a></li>
+              </ul>
+            </li>
+            <li><a href="{{url('sandwich/master-data/user-admin')}}"><i class="fa fa-circle-o"></i> User Admin</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="{{url('sandwich/pendaftaran-partner')}}">
+            <i class="fa fa-user"></i> <span>Pendaftar Partner</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">100</small>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{{url('sandwich/users')}}">
+            <i class="fa fa-user"></i> <span>Users</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">12 M</small>
+            </span>
+          </a>
+        </li>
+        <li class="header">Penting !</li>
+        <li><a href="#"><i class="fa fa-gear text-red"></i> <span>Pengaturan Web</span></a></li>
+        <li><a href="#"><i class="fa fa-user text-yellow"></i> <span>Pengaturan Akun</span></a></li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  @yield('content')
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.4.0
+    </div>
+    <strong>Copyright &copy; 2014-2016 <a href="https://ceklokasi.io">Almsaeed Studio</a>.</strong> All rights
+    reserved.
+  </footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- Bootstrap 3.3.7 -->
+<script src="{{asset('assets/admin/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<!-- FastClick -->
+<script src="{{asset('assets/admin/bower_components/fastclick/lib/fastclick.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('assets/admin/dist/js/adminlte.min.js')}}"></script>
+<!-- Sparkline -->
+<script src="{{asset('assets/admin/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
+<!-- DataTables -->
+<!-- SlimScroll -->
+<script src="{{asset('assets/admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+<!-- ChartJS -->
+<script src="{{asset('assets/admin/bower_components/Chart.js/Chart.js')}}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<!-- <script src="{{asset('assets/admin/dist/js/pages/dashboard2.js')}}"></script> -->
+<!-- AdminLTE for demo purposes -->
+<script src="{{asset('assets/admin/dist/js/demo.js')}}"></script>
+<script src="{{asset('assets/admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script>
+  $(function () {
+    $('#tabel1').DataTable();
+  })
+</script>
 </body>
-
 </html>

@@ -2,15 +2,7 @@
 <html lang="en">
 
   <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Reservasi dan Booking venue mudah, cepat secara online">
-    <meta name="author" content="ceklokasi.id">
-
-    <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
-
-
+    
     @include('homepage.library.header')
 
 
@@ -224,11 +216,11 @@
         </div>
         <div class="row">
           <div class="col-lg-4 ml-auto text-center">
-            <i class="fa fa-whatsapp fa-3x mb-3 sr-contact tex-success"></i>
+            <i class="fa fa-whatsapp fa-3x mb-3 sr-contact text-success"></i>
             <p>081-355-553-758</p>
           </div>
           <div class="col-lg-4 mr-auto text-center">
-            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact text-danger"></i>
             <p>
               <a href="mailto:cs@ceklokasi.id">cs@ceklokasi.id</a>
             </p>
@@ -306,8 +298,27 @@
 
 
     </script>
-    <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: 'c32d5140-98b4-45f7-8dad-177a92c69407', f: true }); done = true; } }; })();</script>
-
+<!-- WhatsHelp.io widget -->
+    <script type="text/javascript">
+        (function () {
+            var options = {
+                facebook: "262657830876693", // Facebook page ID
+                whatsapp: "+6281355553758", // WhatsApp number
+                email: "cs@ceklokasi.id", // Email
+                company_logo_url: "//scontent.xx.fbcdn.net/v/t1.0-1/p50x50/23032457_317705245371951_2827323396448324623_n.png?oh=9ea7c8f8ea3f396d8a377bd8941a6d81&oe=5B07572B", // URL of company logo (png, jpg, gif)
+                greeting_message: "Halo, Apabila ada pertanyaan silahkan kirim pesan.", // Text of greeting message
+                call_to_action: "Hubungi Kami", // Call to action
+                button_color: "#129BF4", // Color of button
+                position: "right", // Position may be 'right' or 'left'
+                order: "facebook,whatsapp,email" // Order of buttons
+            };
+            var proto = document.location.protocol, host = "whatshelp.io", url = proto + "//static." + host;
+            var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+            s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+        })();
+    </script>
+<!-- /WhatsHelp.io widget -->
   </body>
 
 </html>

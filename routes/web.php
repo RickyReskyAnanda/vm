@@ -41,7 +41,9 @@ Route::group(['middleware' => ['access-log-user']], function () {
 });
 
 Route::group(['middleware' => ['access-log']], function () {
-	Route::get('sandwich','Auth\LoginController@logout');
+	Route::get('sandwich','Administrator\AdminLoginController@getAdminLogin');
+	Route::post('sandwich','Administrator\AdminLoginController@adminAuth');
+	Route::get('sandwich/logout','Administrator\AdminLoginController@logout');
 
 	Route::get('sandwich/beranda','Administrator\AdministratorController@viewBeranda');
 
@@ -86,8 +88,41 @@ Route::group(['middleware' => ['access-log']], function () {
 		/*penggunaan ruangan*/
 		Route::post('sandwich/venue/ruangan/penggunaan-ruangan','Administrator\RoomController@postEditPenggunaanRuangan');
 
-	Route::get('sandwich/master-data/kategori-tempat','Administrator\KategoriVenueController@viewKategori');
+	Route::get('sandwich/master-data/jenis-venue','Administrator\Master\VenueKindController@viewJenisVenue');
+	Route::get('sandwich/master-data/jenis-venue/status_{id}','Administrator\Master\VenueKindController@postStatusJenisVenue');
+	Route::post('sandwich/master-data/jenis-venue/tambah','Administrator\Master\VenueKindController@postTambahJenisVenue');
+	Route::get('sandwich/master-data/jenis-venue/hapus_{id}','Administrator\Master\VenueKindController@postHapusJenisVenue');
+
+	Route::get('sandwich/master-data/tipe-venue','Administrator\Master\VenueTypeController@viewTipeVenue');
+	Route::get('sandwich/master-data/tipe-venue/status_{id}','Administrator\Master\VenueTypeController@postStatusTipeVenue');
+	Route::post('sandwich/master-data/tipe-venue/tambah','Administrator\Master\VenueTypeController@postTambahTipeVenue');
+	Route::get('sandwich/master-data/tipe-venue/hapus_{id}','Administrator\Master\VenueTypeController@postHapusTipeVenue');
+
+	//tipe ruangan
+	Route::get('sandwich/master-data/tipe-ruangan','Administrator\Master\RoomTypeController@viewTipeRuangan');
+	Route::get('sandwich/master-data/tipe-ruangan/status_{id}','Administrator\Master\RoomTypeController@postStatusTipeRuangan');
+	Route::post('sandwich/master-data/tipe-ruangan/tambah','Administrator\Master\RoomTypeController@postTambahTipeRuangan');
+	Route::get('sandwich/master-data/tipe-ruangan/hapus_{id}','Administrator\Master\RoomTypeController@postHapusTipeRuangan');
+
+
 	Route::get('sandwich/master-data/kategori-kegiatan','Administrator\KategoriVenueController@viewKategori');
 	Route::get('sandwich/master-data/data-lokasi','Administrator\DataLokasiController@viewLokasi');
-	Route::get('sandwich/master-data/user-admin','Administrator\UserAdminController@viewUserAdmin');
+
+	// user admin
+	Route::get('sandwich/master-data/user-admin','Administrator\Master\UserAdminController@viewUser');
+	Route::get('sandwich/master-data/user-admin/tambah','Administrator\Master\UserAdminController@viewAddUser');
+	Route::post('sandwich/master-data/user-admin/tambah','Administrator\Master\UserAdminController@postAddUser');
+	Route::get('sandwich/master-data/user-admin/edit_{id}','Administrator\Master\UserAdminController@viewEditUser');
+	Route::post('sandwich/master-data/user-admin/edit','Administrator\Master\UserAdminController@postEditUser');
+	Route::get('sandwich/master-data/user-admin/hapus_{id}','Administrator\Master\UserAdminController@postDeleteUser');
+
+	//Home Type
+	Route::get('sandwich/master-data/home-type','Administrator\Master\HomeVenueTypeController@viewTipeVenue');
+	Route::get('sandwich/master-data/home-type/status_{id}','Administrator\Master\HomeVenueTypeController@postStatusTipeVenue');
+	Route::post('sandwich/master-data/home-type/tambah','Administrator\Master\HomeVenueTypeController@postTambahTipeVenue');
+	Route::get('sandwich/master-data/home-type/hapus_{id}','Administrator\Master\HomeVenueTypeController@postHapusTipeVenue');
+
+	//user customer
+	Route::get('sandwich/pendaftaran-partner','Administrator\PartnerController@viewPartner');
+	Route::get('sandwich/users','Administrator\UserController@viewUser');
 });

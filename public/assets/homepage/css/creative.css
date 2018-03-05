@@ -7,7 +7,6 @@ html {
 body {
   font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
   font-size: 15px;
-  background: #f3f3f3;
 }
 
 hr {
@@ -369,7 +368,17 @@ h5{
   font-size: .9rem !important;
   line-height: 2.1 !important;
 }
-
+.card h6{
+    font-weight: 700 !important;
+    line-height: 21px !important;
+    max-height: 42px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    margin-bottom: 4px !important;
+}
 .card-btn-call{
   cursor: pointer;
   font-weight: 700;
@@ -385,4 +394,29 @@ h5{
 }
 .card-btn-menu:hover{
   background: #eee;
+}
+.opsi{
+  cursor:pointer;
+  border:0;
+}
+.opsi .card-body{
+  padding: .4rem .1rem;
+}
+.opsi .card-body label{
+  margin:0;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  letter-spacing: 0.2px !important;
+  color: #a22a2a !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+.opsi .card-body p{
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 15px !important;
+  padding: 0px !important;
+  
+  color: #484848 !important;
 }

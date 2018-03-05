@@ -15,11 +15,17 @@ class RoomModel extends Model
     public function getGallery(){
     	return $this->hasMany('App\Model\Room\RoomGalleryModel','id_room','id_room');
     }
+    public function getSlider(){
+        return $this->hasMany('App\Model\Room\RoomGalleryModel','id_room','id_room')->where('sts','1');
+    }
     public function getPrice(){
     	return $this->hasMany('App\Model\Room\RoomPriceModel','id_room','id_room');
     }
     public function getFacility(){
     	return $this->hasMany('App\Model\Room\RoomFacilityModel','id_room','id_room');
+    }
+    public function getFacilityShow(){
+        return $this->hasMany('App\Model\Room\RoomFacilityModel','id_room','id_room')->where('sts','1');
     }
     public function getProfil(){
         return $this->hasOne('App\Model\Room\RoomGalleryModel','id_room','id_room')->where('profil','1');

@@ -2,12 +2,7 @@
 <html lang="en">
 
   <head>
-    <title>Reservasi dan Booking venue mudah, cepat secara online | Ceklokasi.id</title>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Reservasi dan Booking venue mudah, cepat secara online">
-    <meta name="author" content="ceklokasi.id">
+  
     @include('homepage.library.header')
     <style>
       #map {

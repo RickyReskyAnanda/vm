@@ -12,7 +12,6 @@ class SupportController extends Controller
     	return view('homepage.support.menjadi-partner');
     }
     	public function postMenjadiPartner(Request $request){
-            return $request->all();
     		$this->validate($request,[
 				"cp_nama"			=>"required",
 				"cp_email"			=>"required|email",

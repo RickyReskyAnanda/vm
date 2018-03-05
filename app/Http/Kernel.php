@@ -60,5 +60,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'access-log' => \App\Http\Middleware\AccessLog::class,
         'access-log-user' => \App\Http\Middleware\AccessLogUser::class,
+
+        //admin middleware
+        'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
     ];
 }
